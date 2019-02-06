@@ -1,0 +1,153 @@
+<html>
+    <head>
+        <title>The Subject Was Noses - Shooter POC</title>
+        <style>
+            body {
+                background-color: black;
+            }
+        </style>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.16.1/dist/phaser.js"></script>
+        <script>
+            var football = null;
+            var goodTarget = null;
+            var badTarget = null;
+            var spacebar = null;
+            var crosshairs = null;
+
+
+            var Shooter = new Phaser.Class({
+                Extends: Phaser.Scene,
+                initialize:
+
+                function Shooter () {
+                    console.log("Shooter()");
+                    Phaser.Scene.call(this, { key: 'shooter' });
+
+                },
+
+                preload: function () {
+                    console.log("preload()");
+                    this.load.image('backround', 'ShooterJam/brady_bg.png');
+                    this.load.image('bush', 'ShooterJam/bush.png');
+                    this.load.image('football', 'ShooterJam/football.png');
+                    this.load.image('boy', 'ShooterJam/boy.png');
+                    this.load.image('girl', 'ShooterJam/Cute_girl.png');
+                    this.load.image('crosshairs', 'ShooterJam/crosshairs.png');
+
+                },
+
+                create: function () {
+                    console.log("create()");
+                    var background = this.add.image(0, 0, 'backround');
+                    background.setDisplaySize(800, 600);
+                    background.setOrigin(0, 0);
+
+                    var bush_1 = this.add.image(70, 400, 'bush');
+                    bush_1.setDepth(10);
+
+                    var bush_2 = this.add.image(700, 400, 'bush');
+                    bush_2.setDepth(10);
+
+                    var bush_3 = this.add.image(400, 450, 'bush');
+                    bush_3.setDepth(15);
+
+                    goodTarget = this.physics.add.sprite(70, 320, 'boy');
+                    goodTarget.setDisplaySize(100, 300);
+                    goodTarget.setDepth(7);
+
+                    badTarget = this.physics.add.sprite(400, 350, 'girl');
+                    badTarget.setDisplaySize(200, 300);
+                    badTarget.setDepth(13);
+
+                    football = this.physics.add.sprite(400, 600, 'football');
+                    football.setDisplaySize(72, 72);
+                    football.setRotation(2.35);
+                    football.setDepth(20);
+                    //football.setDragY(100);
+
+                    crosshairs = this.physics.add.sprite(400, 550, 'crosshairs');
+                    crosshairs.setDisplaySize(32, 32);
+                    crosshairs.setSize(50, 50);
+                    crosshairs.setDepth(25);
+                    crosshairs.setVisible(false);
+
+
+                    this.input.on('pointermove', function (pointer) {
+
+                        football.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+                        crosshairs.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+
+                    }, this);
+
+                    spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+                    var collider = this.physics.add.overlap(football, crosshairs, function (footballOnTarget) {
+                        console.log("landed");
+                        crosshairs.setVisible(false);
+                        footballOnTarget.body.stop();
+
+                        //Check for hit / Miss
+                        // Handle Scoring
+                        //Reset
+                        football.setY(600);
+                        crosshairs.setY(550);
+                        this.input.on('pointermove', function (pointer) {
+
+                            football.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+                            crosshairs.x = Phaser.Math.Clamp(pointer.x, 52, 748);
+
+                        }, this);
+
+                    }, null, this);
+
+                },
+
+
+                update: function () {
+                    //console.log("update()");
+
+                    if (Phaser.Input.Keyboard.JustDown(spacebar)) {
+                        console.log("set");
+                        this.input.off('pointermove');
+                        crosshairs.setVisible(true);
+                        crosshairs.body.setVelocityY(-100);
+                        //football.body.setVelocityY(-100);
+                        //this.physics.moveToObject(football, block, 200);
+                    }
+
+                    if (Phaser.Input.Keyboard.JustUp(spacebar)) {
+                        console.log("throw");
+                        crosshairs.body.stop();
+                        this.physics.moveToObject(football, crosshairs, 300);
+                    }
+                }
+
+            });
+
+
+        /**
+         * Main Game Config - Must come after class declaration otherwise it wont know what was there
+         * */
+            var config = {
+                type: Phaser.WEBGL,
+                width: 800,
+                height: 600,
+                parent: 'gameCanvas',
+                scene: [ Shooter ],
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        debug: true
+                    }
+                }
+            };
+
+            var game = new Phaser.Game(config);
+
+
+        </script>
+    </head>
+    <body>
+        <div id="gameCanvas"></div>
+    </body>
+</html>
