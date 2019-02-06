@@ -37,15 +37,17 @@
     var player;
     var cursor;
     var timedEvent;
+    var resetFlagEvent;
 
     var air_particle;
+    var hitByParticle = false;
 
     var game = new Phaser.Game(config);
 
     function preload ()
     {
         this.load.image('amoeba', 'PlatformerJam/amoeba.png');
-        this.load.image('ground', 'PlatformerJam/level_ground.png');
+        this.load.image('ground', 'PlatformerJam/MainLevel.png');
         this.load.image('air', 'PlatformerJam/air_particle.png');
     }
 
@@ -56,19 +58,21 @@
         level = this.add.image(0, 600, 'ground').setOrigin(0,1);
 
         //setting bounds around the world
-        this.matter.world.setBounds(0, 0, 800, 600, 32, true, true, false, true);
+        this.matter.world.setBounds(0, 0, 2400, 600, 32, true, true, false, true);
+        this.cameras.main.setBounds(0, 0, 2400, 600);
 
         //actually setting vertices for the body that would encapsulate the terrain
-        var path = '0 425 84 391 134 378 202 400 252 418 313 385 333 371 409 379 494 410 587 364 650 363 718 409 747 408 800 367 800 600 0 600';
+        //var path = '0 425 84 391 134 378 202 400 252 418 313 385 333 371 409 379 494 410 587 364 650 363 718 409 747 408 800 367 800 600 0 600';
+        var path = '0 526 10 522 20 510 59 489 102 479 123 484 148 502 153 502 188 460 215 437 240 430 294 430 321 441 347 469 373 439 395 415 430 401 491 397 514 399 564 434 579 417 601 400 619 392 668 371 740 369 795 397 869 365 930 364 973 389 1049 359 1090 361 1127 387 1185 362 1235 363 1286 387 1351 363 1395 363 1442 387 1500 361 1540 360 1591 388 1657 358 1691 358 1751 385 1798 363 1874 359 1927 380 1990 362 2043 359 2085 378 2129 357 2190 355 2244 382 2315 357 2400 354 2400 600 0 600';
 
         var verts = this.matter.verts.fromPath(path);
-        var ground = this.matter.add.fromVertices(505, 457, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        var ground = this.matter.add.fromVertices(1115, 475, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
         //NOTE FOR SHAWN:         I tinkered here: ^    ^                          and here ^
 
 
 
         //spawning Red Amoeba (player object)
-        player = this.matter.add.image(400, 50, 'amoeba');
+        player = this.matter.add.image(2200, 50, 'amoeba');
         player.xType = "player";
         player.setBody(
         {
@@ -82,26 +86,44 @@
           //console.log("collisionstart");
           if(bodyA.gameObject != null && bodyB.gameObject != null) {
             //console.log(bodyB);
-            if(bodyB.gameObject.xType == "air_particle") {
+            if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "air_particle") {
               //console.log("HIT_B");
               bodyB.gameObject.visible = false;
               bodyB.gameObject.destroy();
+              bodyA.gameObject.visible = false;
+              bodyA.gameObject.destroy();
               //bodyB.destroy();
             }
 
-            if(bodyA.gameObject.xType == "air_particle") {
-              //console.log("HIT_A");
+            if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player")
+            {
               bodyA.gameObject.visible = false;
               bodyA.gameObject.destroy();
-              //bodyA.destroy();
+              hitByParticle = true;
+              bodyB.gameObject.setVelocityX(7);
+              resetFlagEvent = this.time.delayedCall(2000, resetFlag, [], this);
+
+
             }
+            else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player")
+            {
+              bodyB.gameObject.visible = false;
+              bodyB.gameObject.destroy();
+              hitByParticle = true;
+              bodyA.gameObject.setVelocityX(7);
+              resetFlagEvent = this.time.delayedCall(2000, resetFlag, [], this);
+            }
+
+
           }
 
         }, this);
 
         cursor = this.input.keyboard.createCursorKeys();
+        this.cameras.main.startFollow(player, true, 0.09, 0.09);  //make camera follow the player
 
         timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: onEvent, callbackScope: this, loop: true });
+
     }
 
     function update ()
@@ -109,13 +131,13 @@
 
 
 
-      if(cursor.left.isDown)
+      if(cursor.left.isDown && !hitByParticle)
       {
         player.setVelocityX(-4);
 
       }
 
-      if(cursor.right.isDown)
+      if(cursor.right.isDown && !hitByParticle)
       {
         player.setVelocityX(4);
       }
@@ -124,6 +146,11 @@
       {
         player.setVelocityY(-3);
       }
+    }
+
+    function resetFlag()
+    {
+      hitByParticle = false;
     }
 
     function onEvent()
