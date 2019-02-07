@@ -198,8 +198,8 @@
                     popInEmitter.on('popOutTarget', this.popOutTargetHandler, this);
                     popInEmitter.on('popOutTargetCompleted', this.popOutTargetCompletedHandler, this);
 
-                    startGoodTargetTimedEvent = this.time.addEvent({ delay: Phaser.Math.Between(1000,5000), callback: this.randomizeTarget, callbackScope: this, args: [goodTarget], loop: true });
-                    startBadTargetTimedEvent = this.time.addEvent({ delay: Phaser.Math.Between(1000,5000), callback: this.randomizeTarget, callbackScope: this, args: [badTarget], loop: true });
+                    startGoodTargetTimedEvent = this.time.addEvent({ delay: Phaser.Math.Between(2000,5000), callback: this.randomizeTarget, callbackScope: this, args: [goodTarget], loop: false });
+                    startBadTargetTimedEvent = this.time.addEvent({ delay: Phaser.Math.Between(500,3000), callback: this.randomizeTarget, callbackScope: this, args: [badTarget], loop: false });
 
 
                 },
@@ -237,6 +237,7 @@
                         if(newSize >= 100) {
                             newSize = 100;
                             goodTarget.canPopIn = false;
+                            this.time.addEvent({ delay: Phaser.Math.Between(1000,5000), callback: this.randomizeTarget, callbackScope: this, args: [goodTarget], loop: false });
                         }
 
                         goodTarget.setDisplaySize(newSize, 300);
@@ -260,6 +261,7 @@
                         if(newSize >= 200) {
                             newSize = 200;
                             badTarget.canPopIn = false;
+                            this.time.addEvent({ delay: Phaser.Math.Between(500,3000), callback: this.randomizeTarget, callbackScope: this, args: [badTarget], loop: false });
                         }
 
                         badTarget.setDisplaySize(newSize, 300);
@@ -315,6 +317,8 @@
                     target.setX(-1000);
                     target.setY(-1000);
                     target.isIn = false;
+
+                    this.time.addEvent({ delay: Phaser.Math.Between(1000,5000), callback: this.randomizeTarget, callbackScope: this, args: [target], loop: false });
                 }
 
             });
@@ -332,7 +336,7 @@
                 physics: {
                     default: 'arcade',
                     arcade: {
-                        debug: true
+                        debug: false
                     }
                 }
             };
