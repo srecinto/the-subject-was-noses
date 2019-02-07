@@ -13,6 +13,11 @@
             var badTarget = null;
             var spacebar = null;
             var crosshairs = null;
+            var hasHitBadTarget = false;
+            var hasHitGoodTarget = false;
+            var score = 0;
+            var scoreText = null;
+            var messageText = null;
 
 
             var Shooter = new Phaser.Class({
@@ -42,6 +47,28 @@
                     background.setDisplaySize(800, 600);
                     background.setOrigin(0, 0);
 
+                    scoreText = this.make.text({
+                        x: 50,
+                        y: 50,
+                        text: "Score: " + score,
+                        style: {
+                            font: "20px monospace",
+                            fill: "#ffffff"
+                        }
+                    });
+
+                    messageText = this.make.text({
+                       x: this.sys.game.canvas.width / 2,
+                       y: 200,
+                        text: "Ready Set Hike!",
+                        style: {
+                            font: "36px monospace",
+                            fill: "#ffffff"
+                        },
+                        depth: 30
+                    });
+                    messageText.setOrigin(0.5);
+
                     var bush_1 = this.add.image(70, 400, 'bush');
                     bush_1.setDepth(10);
 
@@ -53,21 +80,28 @@
 
                     goodTarget = this.physics.add.sprite(70, 320, 'boy');
                     goodTarget.setDisplaySize(100, 300);
+                    goodTarget.setSize(140, 200);
+                    goodTarget.setOffset(100, 100);
                     goodTarget.setDepth(7);
 
                     badTarget = this.physics.add.sprite(400, 350, 'girl');
                     badTarget.setDisplaySize(200, 300);
+                    badTarget.setSize(150, 260);
+                    badTarget.setOffset(210, 280);
                     badTarget.setDepth(13);
 
                     football = this.physics.add.sprite(400, 600, 'football');
                     football.setDisplaySize(72, 72);
                     football.setRotation(2.35);
+                    football.setSize(300, 400);
+                    football.setOffset(110, 0);
                     football.setDepth(20);
                     //football.setDragY(100);
 
                     crosshairs = this.physics.add.sprite(400, 550, 'crosshairs');
                     crosshairs.setDisplaySize(32, 32);
                     crosshairs.setSize(50, 50);
+                    crosshairs.setOffset(300, 275);
                     crosshairs.setDepth(25);
                     crosshairs.setVisible(false);
 
@@ -81,12 +115,35 @@
 
                     spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-                    var collider = this.physics.add.overlap(football, crosshairs, function (footballOnTarget) {
+                    var footballCrosshairCollider = this.physics.add.overlap(football, crosshairs, function (footballOnTarget) {
                         console.log("landed");
                         crosshairs.setVisible(false);
                         footballOnTarget.body.stop();
 
                         //Check for hit / Miss
+                        if(hasHitGoodTarget) {
+                            console.log("Hit Good Target!");
+                            score += 20;
+                            messageText.setColor("#00ff00");
+                            messageText.setText("GOOD!");
+                        } else if (hasHitBadTarget) {
+                            console.log("Hit Bad Target!");
+                            score -= 50;
+                            messageText.setColor("#ff0000");
+                            messageText.setText("OH MY NOSE!");
+                        } else {
+                            console.log("Missed!");
+                            messageText.setColor("#ffff00");
+                            messageText.setText("MISS!");
+                            score -= 5;
+                        }
+
+                        if(score < 0) {
+                            score = 0;
+                        }
+
+                        scoreText.setText("Score: " + score);
+
                         // Handle Scoring
                         //Reset
                         football.setY(600);
@@ -100,6 +157,16 @@
 
                     }, null, this);
 
+                    var footballBadTargetCollider = this.physics.add.overlap(football, badTarget, function (footballOnTarget) {
+                        hasHitBadTarget = true;
+                    }, null, this);
+
+                    var footballGoodTargetCollider = this.physics.add.overlap(football, goodTarget, function (footballOnTarget) {
+                        hasHitGoodTarget = true;
+                    }, null, this);
+
+
+
                 },
 
 
@@ -111,6 +178,8 @@
                         this.input.off('pointermove');
                         crosshairs.setVisible(true);
                         crosshairs.body.setVelocityY(-100);
+                        hasHitGoodTarget = false;
+                        hasHitBadTarget = false;
                         //football.body.setVelocityY(-100);
                         //this.physics.moveToObject(football, block, 200);
                     }
