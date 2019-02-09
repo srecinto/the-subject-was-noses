@@ -124,7 +124,7 @@ export default class PreloaderScene extends Phaser.Scene {
     ready() {
         console.log("PreloaderScene.ready()");
         this.readyCount++;
-        if (this.readyCount === 2) { //TODO: Change to 2 to add loading delay
+        if (this.readyCount === 1) { //TODO: Change to 2 to add loading delay
             this.scene.start("Title");
         }
     }
