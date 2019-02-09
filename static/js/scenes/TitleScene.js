@@ -31,7 +31,7 @@ export default class TitleScene extends Phaser.Scene {
     create () {
         console.log("TitleScene.create()");
 
-        //this.titleMusic.play();
+        this.titleMusic.play();
 
         this.startButton = this.add.graphics();
         this.startButton.lineStyle(2, 0xffffff, 1);
