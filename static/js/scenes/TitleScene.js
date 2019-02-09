@@ -75,7 +75,7 @@ export default class TitleScene extends Phaser.Scene {
             if(button.length > 0) { // Not weorried about other buttons since there is only one
                 console.log("clicked start");
                 this.titleMusic.stop();
-                this.scene.start("GameScene");
+                this.scene.start("Game");
             }
         }, this);
     }
