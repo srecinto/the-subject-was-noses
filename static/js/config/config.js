@@ -3,8 +3,9 @@ export default {
     parent: "gameCanvas",
     width: 800,
     height: 600,
-    pixelArt: true,
-    roundPixels: true,
+    pixelArt: false,
+    roundPixels: false,
+    title: "TV Game Jam - The Subject Of Noses",
     physics: {
         default: "arcade",
         arcade: {
