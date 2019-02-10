@@ -45,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
             radius: 13
         });
 
+
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         //console.log("collisionstart");
         if(bodyA.gameObject != null && bodyB.gameObject != null) {

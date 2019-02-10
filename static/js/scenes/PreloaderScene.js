@@ -1,4 +1,4 @@
-//import makeAnimations from '/js/config/animations.js';
+import makeAnimations from '/js/config/animations.js';
 
 export default class PreloaderScene extends Phaser.Scene {
     constructor() {
@@ -36,7 +36,7 @@ export default class PreloaderScene extends Phaser.Scene {
             this.percentText.destroy();
             this.assetText.destroy();
             //Set up animations
-            //makeAnimations(this);
+            makeAnimations(this);
             this.ready();
         }.bind(this));
 
@@ -55,7 +55,7 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.spritesheet("squirrel", "/images/squirrel.png", { frameWidth: 32, frameHeight: 32 });
         */
 
-        this.load.image("amoeba", "/assets/images/amoeba.png");
+        this.load.spritesheet("amoeba", "/assets/images/amoeba.png");
         this.load.image("foreground_brown", "/assets/images/fg.png");
         this.load.image("foreground_white", "/assets/images/fg_white.png");
         this.load.image("lace", "/assets/images/lace.png");
