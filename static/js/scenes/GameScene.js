@@ -79,19 +79,19 @@ export default class GameScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, true, 0.09, 0.09);  //make camera follow the player
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
-        this.front = this.add.tileSprite(7200/2,600/2,7200,600,'foreground_brown');
+        this.front = this.add.tileSprite(0,530,7200,143,'foreground_brown');
+        this.front.fixedToCamera = true;
+        this.front.scrollFactorX = .8
     }
 
     update() {
         this.back.tilePositionX -= 10.5;
         if(this.cursor.left.isDown && !this.hitByParticle){
             this.player.setVelocityX(-4);
-            this.front.tilePositionX -= 3.25;
         }
 
         if(this.cursor.right.isDown && !this.hitByParticle) {
             this.player.setVelocityX(4);
-            this.front.tilePositionX += 3.25;
         }
 
         if(this.cursor.up.isDown) {
