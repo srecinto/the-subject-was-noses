@@ -26,6 +26,11 @@
               this.hitByParticle = false;
               Phaser.Scene.call(this, { key: 'Game' });
 
+              this.levelSegment_01;
+              this.levelSegment_02;
+              this.levelSegment_03;
+              this.levelSegment_04;
+
           },
 
           preload: function() {
@@ -41,6 +46,7 @@
               this.load.image('sky', '/assets/images/sky.png');
               this.load.image('foreground_brown', '/assets/images/fg.png');
               this.load.image('mid_reg', '/assets/images/mid_reg.png');
+              this.load.image('mid_white', '/assets/images/mid_white.png');
               this.load.image('particle', '/assets/images/particle.png');
               this.load.image('amoeba', '/assets/images/amoeba.png');
 
@@ -51,7 +57,7 @@
               //342 > 310 > 294
               this.back = this.add.tileSprite(7200/2,600/2,7200,600,'sky');
 
-              level = this.add.image(0, 600, 'mid_reg').setOrigin(0,1);
+              this.level = this.add.image(0, 600, 'mid_reg').setOrigin(0,1);
 
               this.matter.world.setBounds(0, 0, 7200, 600, 32, true, true, false, true);
               this.cameras.main.setBounds(0, 0, 7200, 600);
@@ -62,8 +68,9 @@
               var verts = this.matter.verts.fromPath(path);
               var ground = this.matter.add.fromVertices(620, 407, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
 
-              this.player = this.matter.add.image(50, 50, 'amoeba');
+              this.player = this.matter.add.sprite(7000, 50, 'amoeba');
               this.player.xType = "player";
+              this.player.setDepth(10);
               this.player.setBody({
                 type: 'polygon',
                 sides: 7,
@@ -81,8 +88,7 @@
                     bodyA.gameObject.visible = false;
                     bodyA.gameObject.destroy();
                     //bodyB.destroy();
-                  }
-                  else if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player") {
+                  } else if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player") {
                     bodyA.gameObject.visible = false;
                     bodyA.gameObject.destroy();
                     this.hitByParticle = true;
@@ -102,11 +108,32 @@
               this.cursor = this.input.keyboard.createCursorKeys();
 
               this.cameras.main.startFollow(this.player, true, 0.09, 0.09);  //make camera follow the player
-              this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
-              this.front = this.add.tileSprite(0,530,7200,143,'foreground_brown');
-              this.front.fixedToCamera = true;
-              this.front.scrollFactorX = .8
+              console.log(this.cameras.main);
+
+              //TODO: re-enable when tweaking the particles
+              //this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
+
+              this.front = this.add.tileSprite(0,457,7200,143,'foreground_brown');
+              this.front.setDisplayOrigin(0);
+              this.front.scrollFactorX = .8;
+              this.front.setDepth(50);
+
+              //Full size segment example
+              this.levelSegment_01 = this.add.tileSprite(6445,300,755,300,'mid_reg');
+              this.levelSegment_01.setDisplayOrigin(0);
+
+              //Partial Size Segment example
+              this.levelSegment_02 = this.add.tileSprite(6064,300,381,300,'mid_reg');
+              this.levelSegment_02.setDisplayOrigin(0);
+
+              //Full size segment example diff Color
+              this.levelSegment_03 = this.add.tileSprite(5309,300,755,300,'mid_white');
+              this.levelSegment_03.setDisplayOrigin(0);
+
+              //Full size segment example
+              this.levelSegment_04 = this.add.tileSprite(4554,300,755,300,'mid_reg');
+              this.levelSegment_04.setDisplayOrigin(0);
           },
 
           update: function() {
@@ -133,7 +160,7 @@
           },
 
           onEvent: function() {
-            var air_particle = this.matter.add.image(-10 ,Phaser.Math.Between(50, 280), 'particle');
+            var air_particle = this.matter.add.sprite(-10 ,Phaser.Math.Between(50, 280), 'particle');
             air_particle.xType = "air_particle";
             air_particle.setBody({
                 type: 'polygon',
@@ -154,7 +181,7 @@
           physics: {                              //for physics system
             default: 'matter',
             matter: {
-              gravity: { x: 2,
+              gravity: { x: 0,//TODO: Reset to 2 when ready to tweak wind
                         y: 3},
               debug: true
             }
