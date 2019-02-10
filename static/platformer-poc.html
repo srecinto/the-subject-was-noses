@@ -30,6 +30,8 @@
               this.levelSegment_02;
               this.levelSegment_03;
               this.levelSegment_04;
+              this.levelSegment_05;
+              this.levelSegment_06;
 
           },
 
@@ -68,7 +70,7 @@
               var verts = this.matter.verts.fromPath(path);
               var ground = this.matter.add.fromVertices(620, 407, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
 
-              this.player = this.matter.add.sprite(7000, 50, 'amoeba');
+              this.player = this.matter.add.sprite(3792, 50, 'amoeba');
               this.player.xType = "player";
               this.player.setDepth(10);
               this.player.setBody({
@@ -134,6 +136,18 @@
               //Full size segment example
               this.levelSegment_04 = this.add.tileSprite(4554,300,755,300,'mid_reg');
               this.levelSegment_04.setDisplayOrigin(0);
+
+              //Partial size segment example curved
+              this.levelSegment_05 = this.add.tileSprite(4173,394,381,300,'mid_reg');
+              this.levelSegment_05.setDisplayOrigin(0);
+              this.levelSegment_05.setRotation(-0.244346);
+
+              //Partial size segment example curved
+              this.levelSegment_06 = this.add.tileSprite(3805,485,381,300,'mid_reg');
+              this.levelSegment_06.setDisplayOrigin(0);
+              this.levelSegment_06.setRotation(-0.244346);
+
+
           },
 
           update: function() {
