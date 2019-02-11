@@ -67,10 +67,12 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image('spaceship', '/assets/images/spaceship.png');
         this.load.image('intro', '/assets/images/intro.png');
         this.load.image('outtro', '/assets/images/intro.png');
+        this.load.image('gameover', '/assets/images/intro.png');
 
         this.load.audio("title", "/assets/audio/title.wav");
         this.load.audio("intro", "/assets/audio/intro.wav");
         this.load.audio("outtro", "/assets/audio/outtro.wav");
+        this.load.audio("gameOver", "/assets/audio/gameover.wav");
         this.load.audio("levelCompleted", "/assets/audio/levelCompleted.wav");
         this.load.audio("main", "/assets/audio/main.mp3");
 
@@ -96,7 +98,7 @@ export default class PreloaderScene extends Phaser.Scene {
             text: "Loading...",
             style: {
                 font: "20px monospace",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         });
         this.loadingText.setOrigin(0.5, 0.5);
@@ -119,7 +121,7 @@ export default class PreloaderScene extends Phaser.Scene {
             text: "",
             style: {
                 font: "18px monospace",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         });
         this.assetText.setOrigin(0.5, 0.5);

@@ -19,6 +19,9 @@ export default class GameScene extends Phaser.Scene {
         this.levelSegment_06;
 
         this.collisionCategory;
+
+        this.hud;
+
     }
 
     preload() {
@@ -29,6 +32,7 @@ export default class GameScene extends Phaser.Scene {
 
     create () {
         console.log("GameScene.create()");
+        this.scene.launch("GameHud");
         this.mainMusic.play();
         //342 > 310 > 294
         this.back = this.add.tileSprite(7200/2,600/2,7200,600,'sky');
@@ -134,6 +138,11 @@ export default class GameScene extends Phaser.Scene {
 
         }, this);
 
+        var gameHud = this.scene.get('GameHud');
+        gameHud.events.on('gameOver', function () {
+            this.showEndGameLoseScene();
+        }, this);
+
 
         this.cursor = this.input.keyboard.createCursorKeys();
 
@@ -205,6 +214,7 @@ export default class GameScene extends Phaser.Scene {
             this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
             this.player.setPosition(this.spaceship.x, this.spaceship.y);
         }
+
     }
 
     resetFlag() {
@@ -247,5 +257,11 @@ export default class GameScene extends Phaser.Scene {
     showEndGameWinScene() {
         console.log("showEndGameWinScene()");
         this.scene.start("Outtro");
+    }
+
+    showEndGameLoseScene() {
+        console.log("showEndGameLoseScene()");
+        this.mainMusic.stop();
+        this.scene.start("GameOver");
     }
 };
