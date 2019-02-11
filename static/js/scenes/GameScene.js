@@ -22,6 +22,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.hud;
 
+        this.playerReachedShip = false;
+
     }
 
     preload() {
@@ -32,23 +34,105 @@ export default class GameScene extends Phaser.Scene {
 
     create () {
         console.log("GameScene.create()");
+        this.playerReachedShip = false;
         this.scene.launch("GameHud");
         this.mainMusic.play();
         //342 > 310 > 294
         this.back = this.add.tileSprite(7200/2,600/2,7200,600,'sky');
 
-        this.level = this.add.image(0, 600, 'mid_reg').setOrigin(0,1);
-
-        this.matter.world.setBounds(0, 0, 7200, 600, 32, true, true, false, true);
+        this.matter.world.setBounds(0, 0, 7200, 600, 32, true, true, true, true);
         this.cameras.main.setBounds(0, 0, 7200, 600);
 
-        var path = '0 294 38 310 68 342 97 342 126 310 156 294 196 294 231 310 260 342 289 342 318 310 353 294 388 294 422 310 452 342 481 342 511 310 544 294 581 294 615 310 644 342 ' +
+        /*var path = '10 294 38 310 68 342 97 342 126 310 156 294 196 294 231 310 260 342 289 342 318 310 353 294 388 294 422 310 452 342 481 342 511 310 544 294 581 294 615 310 644 342 ' +
                 '672 342 703 310 737 294 772 294 805 310 836 342 865 342 896 310 929 294 965 294 998 310 1029 342 1055 342 1085 310 1119 294 1158 294 1189 310 1221 342 1221 600 0 600 ' +
-                '';
+                '';*/
+        var path_01 = '30 599 57 550 107 510 170 515 202 537 220 532 259 485 300 460 350 465 385 487 410 483 450 433 480 413 520 420 570 443 590 437 625 390 670 370 720 380 740 395 767 395 767 600 0 600'
+        var verts_01 = this.matter.verts.fromPath(path_01);
+        var ground_01 = this.matter.add.fromVertices(605, 537, verts_01, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        ground_01.xType = "ground";
+        //32 humps
+        //hump1
+        var path_02 = '0 50 13 50 42 19 80 2 114 2 148 19 177 50 190 50 190 600 0 600'
+        var verts_02 = this.matter.verts.fromPath(path_02);
+        var ground_02 = this.matter.add.fromVertices(1040, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
 
-        var verts = this.matter.verts.fromPath(path);
-        var ground = this.matter.add.fromVertices(620, 407, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
-        ground.xType = "ground"
+        //hump2
+        var ground_03 = this.matter.add.fromVertices(1230, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump3
+        var ground_04 = this.matter.add.fromVertices(1420, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump4
+        var ground_05 = this.matter.add.fromVertices(1610, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump5
+        var ground_06 = this.matter.add.fromVertices(1800, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump6
+        var ground_07 = this.matter.add.fromVertices(1990, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump7
+        var ground_08 = this.matter.add.fromVertices(2180, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump8
+        var ground_09 = this.matter.add.fromVertices(2370, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump9
+        var ground_10 = this.matter.add.fromVertices(2553, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump10
+        var ground_11 = this.matter.add.fromVertices(2743, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+
+        //hump11
+        var ground_12 = this.matter.add.fromVertices(2933, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump12
+        var ground_13 = this.matter.add.fromVertices(3123, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump13
+        var ground_14 = this.matter.add.fromVertices(3313, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump14
+        var ground_15 = this.matter.add.fromVertices(3503, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump15
+        var ground_16 = this.matter.add.fromVertices(3693, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump16
+        var ground_17 = this.matter.add.fromVertices(3883, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump17
+        var ground_18 = this.matter.add.fromVertices(4063, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump18
+        var ground_19 = this.matter.add.fromVertices(4253, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump19
+        var ground_20 = this.matter.add.fromVertices(4443, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump20
+        var ground_21 = this.matter.add.fromVertices(4627, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+
+        //hump21
+        var ground_22 = this.matter.add.fromVertices(4817, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump22
+        var ground_23 = this.matter.add.fromVertices(5007, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump23
+        var ground_24 = this.matter.add.fromVertices(5197, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump24
+        var ground_25 = this.matter.add.fromVertices(5387, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump25
+        var ground_26 = this.matter.add.fromVertices(5570, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump26
+        var ground_27 = this.matter.add.fromVertices(5760, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump27
+        var ground_28 = this.matter.add.fromVertices(5950, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump28
+        var ground_29 = this.matter.add.fromVertices(6140, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump29
+        var ground_30 = this.matter.add.fromVertices(6330, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump30
+        var ground_31 = this.matter.add.fromVertices(6520, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump31
+        var ground_32 = this.matter.add.fromVertices(6710, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump32
+        var ground_33 = this.matter.add.fromVertices(6900, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //hump33
+        var ground_34 = this.matter.add.fromVertices(7090, 630, verts_02, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+
+        var path_03 = '0 135 26 135 45 80 95 27 135 9 183 0 234 9 270 27 321 80 341 135 344 147 344 454 24 454 23 406 0 406';
+        var verts_03 = this.matter.verts.fromPath(path_03);
+
+        //lace1
+        var ground_35 = this.matter.add.fromVertices(3433 , 498, verts_03, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //lace2
+        var ground_36 = this.matter.add.fromVertices(3779 , 498, verts_03, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+        //lace3
+        var ground_37 = this.matter.add.fromVertices(4125 , 498, verts_03, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+
 
         this.player = this.matter.add.sprite(7100, 50);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
@@ -62,7 +146,7 @@ export default class GameScene extends Phaser.Scene {
         this.player.setDepth(11);
         this.playerSprite.anims.play("amoeba_idle", true);
 
-        this.spaceship = this.matter.add.sprite(3880, 450, "spaceship");
+        this.spaceship = this.matter.add.sprite(280, 500, "spaceship");
         this.spaceship.setBody({
         type: 'polygon',
         sides: 5,
@@ -76,6 +160,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.collisionCategory = this.matter.world.nextCategory();
         this.player.setCollisionCategory(this.collisionCategory);
+        this.spaceship.setCollisionCategory(this.collisionCategory);
+        this.spaceship.setCollidesWith([this.collisionCategory]);
 
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         //console.log("collisionstart");
@@ -107,31 +193,34 @@ export default class GameScene extends Phaser.Scene {
             bodyA.gameObject.setVelocityX(7);
             this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
           } else if(bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") {
-            this.player.setVisible(false);
-            this.playerSprite.setVisible(false);
-            this.mainMusic.stop();
+            if(!this.playerReachedShip) {
+                this.playerReachedShip = true;
+                this.player.setVisible(false);
+                this.playerSprite.setVisible(false);
+                this.mainMusic.stop();
 
-            console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
+                console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
 
-            this.spaceshipLaunchParticles = this.add.particles('particle');
-            this.spaceshipLaunchParticles.createEmitter({
-                alpha: { start: 1, end: 0 },
-                scale: { start: 0.5, end: 2.5 },
-                //tint: { start: 0xff945e, end: 0xff945e },
-                speed: 20,
-                accelerationY: 300,
-                accelerationX: 150,
-                angle: { min: -85, max: -95 },
-                rotate: { min: -180, max: 180 },
-                lifespan: { min: 1000, max: 1100 },
-                blendMode: 'ADD',
-                frequency: 110
-            });
+                this.spaceshipLaunchParticles = this.add.particles('particle');
+                this.spaceshipLaunchParticles.createEmitter({
+                    alpha: { start: 1, end: 0 },
+                    scale: { start: 0.5, end: 2.5 },
+                    //tint: { start: 0xff945e, end: 0xff945e },
+                    speed: 20,
+                    accelerationY: 300,
+                    accelerationX: 150,
+                    angle: { min: -85, max: -95 },
+                    rotate: { min: -180, max: 180 },
+                    lifespan: { min: 1000, max: 1100 },
+                    blendMode: 'ADD',
+                    frequency: 110
+                });
 
-            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
+                this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
 
-            this.levelCompletedMusic.play();
-            this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
+                this.levelCompletedMusic.play();
+                this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
+            }
           }
 
         }
@@ -151,42 +240,33 @@ export default class GameScene extends Phaser.Scene {
         //TODO: re-enable when tweaking the particles
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
-        this.front = this.add.tileSprite(0,457,7200,143,'foreground_brown');
-        this.front.setDisplayOrigin(0);
-        this.front.scrollFactorX = .8;
-        this.front.setDepth(50);
+        this.front_00 = this.add.tileSprite(200,657,800,143,'foreground_brown');
+        this.front_00.setDisplayOrigin(0);
+        this.front_00.scrollFactorX = .8;
+        this.front_00.setDepth(50);
+        this.front_00.setRotation(-0.244346)
 
+        this.front_01 = this.add.tileSprite(1000,457,7200,143,'foreground_brown');
+        this.front_01.setDisplayOrigin(0);
+        this.front_01.scrollFactorX = .8;
+        this.front_01.setDepth(50);
+
+        this.levelSegment_00 = this.add.tileSprite(10,600,950,300,'mid_reg');
+        this.levelSegment_00.setDisplayOrigin(0);
+        this.levelSegment_00.setRotation(-0.244346);
         //Full size segment example
-        this.levelSegment_01 = this.add.tileSprite(6445,300,755,300,'mid_reg');
+        this.levelSegment_01 = this.add.tileSprite(945,368,6755,300,'mid_reg');                    //total 32 humps
         this.levelSegment_01.setDisplayOrigin(0);
-        this.levelSegment_01.setDepth(5);
-
-        //Partial Size Segment example
-        this.levelSegment_02 = this.add.tileSprite(6064,300,381,300,'mid_reg');
-        this.levelSegment_02.setDisplayOrigin(0);
-        this.levelSegment_02.setDepth(5);
 
         //Full size segment example diff Color
-        this.levelSegment_03 = this.add.tileSprite(5309,300,755,300,'mid_white');
+        this.levelSegment_03 = this.add.tileSprite(1323,368,755,300,'mid_white');
         this.levelSegment_03.setDisplayOrigin(0);
-        this.levelSegment_03.setDepth(5);
 
-        //Full size segment example
-        this.levelSegment_04 = this.add.tileSprite(4554,300,755,300,'mid_reg');
+        this.levelSegment_04 = this.add.tileSprite(6043,368,755,300,'mid_white');
         this.levelSegment_04.setDisplayOrigin(0);
-        this.levelSegment_04.setDepth(5);
 
-        //Partial size segment example curved
-        this.levelSegment_05 = this.add.tileSprite(4173,394,381,300,'mid_reg');
-        this.levelSegment_05.setDisplayOrigin(0);
-        this.levelSegment_05.setRotation(-0.244346);
-        this.levelSegment_05.setDepth(5);
-
-        //Partial size segment example curved
-        this.levelSegment_06 = this.add.tileSprite(3805,485,381,300,'mid_reg');
-        this.levelSegment_06.setDisplayOrigin(0);
-        this.levelSegment_06.setRotation(-0.244346);
-        this.levelSegment_06.setDepth(5);
+        this.lace_01 = this.add.tileSprite(3335,237,1065,300,'lace');                                             //3335,237,1065,300,'lace'
+        this.lace_01.setDisplayOrigin(0);
     }
 
     update() {
@@ -239,6 +319,7 @@ export default class GameScene extends Phaser.Scene {
         air_particle.setIgnoreGravity(true);
         air_particle.setFrictionAir(0);
         air_particle.setVelocityX(10);
+        air_particle.setDepth(25);
     }
 
     launchShip(velocity) {
@@ -256,12 +337,15 @@ export default class GameScene extends Phaser.Scene {
 
     showEndGameWinScene() {
         console.log("showEndGameWinScene()");
+        this.levelCompletedMusic.stop();
         this.scene.start("Outtro");
     }
 
     showEndGameLoseScene() {
-        console.log("showEndGameLoseScene()");
-        this.mainMusic.stop();
-        this.scene.start("GameOver");
+        if(!this.playerReachedShip) {
+            console.log("showEndGameLoseScene()");
+            this.mainMusic.stop();
+            this.scene.start("GameOver");
+        }
     }
 };

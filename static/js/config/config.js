@@ -13,7 +13,7 @@ export default {
                 x: 2,
                 y: 3
             },
-        debug: true
+        debug: false
         }
     }
 };
