@@ -4,6 +4,8 @@ import GameScene from "/js/scenes/GameScene.js";
 import TitleScene from "/js/scenes/TitleScene.js";
 import BootScene from "/js/scenes/BootScene.js";
 import PreloaderScene from "/js/scenes/PreloaderScene.js";
+import IntroScene from "/js/scenes/IntroScene.js";
+import OuttroScene from "/js/scenes/OuttroScene.js";
 
 class Game extends Phaser.Game {
     constructor () {
@@ -12,6 +14,8 @@ class Game extends Phaser.Game {
         this.scene.add("Title", TitleScene);
         this.scene.add("Boot", BootScene);
         this.scene.add("Preloader", PreloaderScene);
+        this.scene.add("Intro", IntroScene);
+        this.scene.add("Outtro", OuttroScene);
         this.scene.start("Boot");
     }
 }

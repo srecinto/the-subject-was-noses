@@ -90,7 +90,7 @@
               var ground = this.matter.add.fromVertices(620, 407, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
               ground.xType = "ground"
 
-              this.player = this.matter.add.sprite(3805, 50);
+              this.player = this.matter.add.sprite(7100, 50);
               this.playerSprite = this.add.sprite(7100, 50, "amoeba");
               this.player.xType = "player";
               this.player.setDepth(10);
@@ -158,15 +158,17 @@
                         //tint: { start: 0xff945e, end: 0xff945e },
                         speed: 20,
                         accelerationY: 300,
-                        accelerationX: 100,
+                        accelerationX: 150,
                         angle: { min: -85, max: -95 },
                         rotate: { min: -180, max: 180 },
                         lifespan: { min: 1000, max: 1100 },
                         blendMode: 'ADD',
-                        frequency: 110,
-                        x: this.spaceship.x,
-                        y: this.spaceship.y
+                        frequency: 110
                     });
+
+                    this.spaceshipLaunchParticles.setPosition(this.spaceship.x -15, this.spaceship.y);
+
+                    this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
                   }
 
                 }
@@ -237,6 +239,9 @@
                   if(this.cursor.up.isDown) {
                     this.player.setVelocityY(-3);
                   }
+              } else {
+                this.spaceshipLaunchParticles.setPosition(this.spaceship.x -15, this.spaceship.y);
+                this.player.setPosition(this.spaceship.x, this.spaceship.y);
               }
           },
 
@@ -262,6 +267,23 @@
             air_particle.setIgnoreGravity(true);
             air_particle.setFrictionAir(0);
             air_particle.setVelocityX(10);
+          },
+
+          launchShip: function(velocity) {
+            if (velocity >= 10) {
+              console.log("Go to end game win screen");
+            } else {
+              this.spaceship.setStatic(false);
+              this.spaceship.setIgnoreGravity(true);
+              this.spaceship.setVelocityY(-10);
+              this.spaceship.setVelocityX(-5);
+
+              this.time.addEvent({ delay: 3000, callback: this.showEndGameWinScene, callbackScope: this, loop: false });
+            }
+          },
+
+          showEndGameWinScene: function() {
+            console.log("showEndGameWinScene()");
           }
       });
 
