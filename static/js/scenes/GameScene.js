@@ -22,6 +22,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.hud;
 
+        this.playerReachedShip = false;
+
     }
 
     preload() {
@@ -32,12 +34,13 @@ export default class GameScene extends Phaser.Scene {
 
     create () {
         console.log("GameScene.create()");
+        this.playerReachedShip = false;
         this.scene.launch("GameHud");
         this.mainMusic.play();
         //342 > 310 > 294
         this.back = this.add.tileSprite(7200/2,600/2,7200,600,'sky');
 
-        this.matter.world.setBounds(0, 0, 7200, 600, 32, true, true, false, true);
+        this.matter.world.setBounds(0, 0, 7200, 600, 32, true, true, true, true);
         this.cameras.main.setBounds(0, 0, 7200, 600);
 
         /*var path = '10 294 38 310 68 342 97 342 126 310 156 294 196 294 231 310 260 342 289 342 318 310 353 294 388 294 422 310 452 342 481 342 511 310 544 294 581 294 615 310 644 342 ' +
@@ -188,31 +191,34 @@ export default class GameScene extends Phaser.Scene {
             bodyA.gameObject.setVelocityX(7);
             this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
           } else if(bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") {
-            this.player.setVisible(false);
-            this.playerSprite.setVisible(false);
-            this.mainMusic.stop();
+            if(!this.playerReachedShip) {
+                this.playerReachedShip = true;
+                this.player.setVisible(false);
+                this.playerSprite.setVisible(false);
+                this.mainMusic.stop();
 
-            console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
+                console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
 
-            this.spaceshipLaunchParticles = this.add.particles('particle');
-            this.spaceshipLaunchParticles.createEmitter({
-                alpha: { start: 1, end: 0 },
-                scale: { start: 0.5, end: 2.5 },
-                //tint: { start: 0xff945e, end: 0xff945e },
-                speed: 20,
-                accelerationY: 300,
-                accelerationX: 150,
-                angle: { min: -85, max: -95 },
-                rotate: { min: -180, max: 180 },
-                lifespan: { min: 1000, max: 1100 },
-                blendMode: 'ADD',
-                frequency: 110
-            });
+                this.spaceshipLaunchParticles = this.add.particles('particle');
+                this.spaceshipLaunchParticles.createEmitter({
+                    alpha: { start: 1, end: 0 },
+                    scale: { start: 0.5, end: 2.5 },
+                    //tint: { start: 0xff945e, end: 0xff945e },
+                    speed: 20,
+                    accelerationY: 300,
+                    accelerationX: 150,
+                    angle: { min: -85, max: -95 },
+                    rotate: { min: -180, max: 180 },
+                    lifespan: { min: 1000, max: 1100 },
+                    blendMode: 'ADD',
+                    frequency: 110
+                });
 
-            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
+                this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
 
-            this.levelCompletedMusic.play();
-            this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
+                this.levelCompletedMusic.play();
+                this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
+            }
           }
 
         }
@@ -311,6 +317,7 @@ export default class GameScene extends Phaser.Scene {
         air_particle.setIgnoreGravity(true);
         air_particle.setFrictionAir(0);
         air_particle.setVelocityX(10);
+        air_particle.setDepth(25);
     }
 
     launchShip(velocity) {
@@ -328,12 +335,15 @@ export default class GameScene extends Phaser.Scene {
 
     showEndGameWinScene() {
         console.log("showEndGameWinScene()");
+        this.levelCompletedMusic.stop();
         this.scene.start("Outtro");
     }
 
     showEndGameLoseScene() {
-        console.log("showEndGameLoseScene()");
-        this.mainMusic.stop();
-        this.scene.start("GameOver");
+        if(!this.playerReachedShip) {
+            console.log("showEndGameLoseScene()");
+            this.mainMusic.stop();
+            this.scene.start("GameOver");
+        }
     }
 };
