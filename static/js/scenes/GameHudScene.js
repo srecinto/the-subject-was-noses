@@ -37,7 +37,7 @@ export default class GameHudScene extends Phaser.Scene {
                 // Move timer icon
                 var move = (progress * 630) / 100;
                 var deltaMove = (move - this.previousMove) * 100;
-                console.log("progress: " + progress + " move: " + move + " deltaMove: " + deltaMove);
+                //console.log("progress: " + progress + " move: " + move + " deltaMove: " + deltaMove);
                 this.currentTimeIcon.setX(this.currentTimeIcon.x - deltaMove);
                 this.previousMove = move;
             } else {
