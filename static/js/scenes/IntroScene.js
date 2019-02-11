@@ -2,6 +2,7 @@ export default class IntroScene extends Phaser.Scene {
     constructor() {
         super("Intro");
         console.log("IntroScene.constructor()");
+        this.keyPressed = false;
     }
 
     preload() {
@@ -16,9 +17,12 @@ export default class IntroScene extends Phaser.Scene {
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //
 
-        this.input.keyboard.on('keydown', function (event) {
-            this.introMusic.stop();
-            this.scene.start("Game");
+        this.input.keyboard.on('keyup', function (event) {
+            if(!this.keyPressed) {
+                this.keyPressed = true;
+                this.introMusic.stop();
+                this.scene.start("Game");
+            }
         }, this);
 
         this.time.addEvent({ delay: 3000, callback: this.pressAnykey, callbackScope: this, loop: false });
