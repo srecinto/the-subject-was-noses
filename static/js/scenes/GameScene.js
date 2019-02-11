@@ -160,6 +160,8 @@ export default class GameScene extends Phaser.Scene {
 
         this.collisionCategory = this.matter.world.nextCategory();
         this.player.setCollisionCategory(this.collisionCategory);
+        this.spaceship.setCollisionCategory(this.collisionCategory);
+        this.spaceship.setCollidesWith([this.collisionCategory]);
 
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         //console.log("collisionstart");
