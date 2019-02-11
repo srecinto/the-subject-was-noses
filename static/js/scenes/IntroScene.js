@@ -6,6 +6,7 @@ export default class IntroScene extends Phaser.Scene {
 
     preload() {
         console.log("IntroScene.preload()");
+        this.keyPressed = false;
         this.introMusic = this.sound.add("intro", { loop: false });
         this.introImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro");
     }
@@ -16,9 +17,12 @@ export default class IntroScene extends Phaser.Scene {
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //
 
-        this.input.keyboard.on('keydown', function (event) {
-            this.introMusic.stop();
-            this.scene.start("Game");
+        this.input.keyboard.on('keyup', function (event) {
+            if(!this.keyPressed) {
+                this.keyPressed = true;
+                this.introMusic.stop();
+                this.scene.start("Game");
+            }
         }, this);
 
         this.time.addEvent({ delay: 3000, callback: this.pressAnykey, callbackScope: this, loop: false });
