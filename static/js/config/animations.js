@@ -7,7 +7,7 @@ export default function makeAnimations(scene) {
         key: "amoeba_idle",
         frames: scene.anims.generateFrameNumbers("amoeba", { frames: [ 1, 2 ] } ),
         frameRate: 24,
-        repeat: 0
+        repeat: -1
     });
 
     scene.anims.create({

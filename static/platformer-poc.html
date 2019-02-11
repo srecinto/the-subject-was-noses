@@ -33,6 +33,8 @@
               this.levelSegment_05;
               this.levelSegment_06;
 
+              this.collisionCategory;
+
           },
 
           preload: function() {
@@ -51,6 +53,7 @@
               this.load.image('mid_white', '/assets/images/mid_white.png');
               this.load.image('particle', '/assets/images/particle.png');
               this.load.spritesheet('amoeba', '/assets/images/amoeba.png', { frameWidth: 68, frameHeight: 77 });
+              this.load.image('spaceship', '/assets/images/spaceship.png');
 
           },
 
@@ -85,6 +88,7 @@
 
               var verts = this.matter.verts.fromPath(path);
               var ground = this.matter.add.fromVertices(620, 407, verts, { ignoreGravity: true, isStatic: true }, true, 0.01, 10);
+              ground.xType = "ground"
 
               this.player = this.matter.add.sprite(7100, 50);
               this.playerSprite = this.add.sprite(7100, 50, "amoeba");
@@ -97,10 +101,29 @@
               });
               this.playerSprite.anims.play("amoeba_idle", true);
 
+              this.spaceship = this.matter.add.sprite(3880, 450, "spaceship");
+              this.spaceship.setBody({
+                type: 'polygon',
+                sides: 5,
+                radius: 50
+              });
+              this.spaceship.setStatic(true);
+              this.spaceship.setIgnoreGravity(true);
+              this.spaceship.setDisplaySize(150,150);
+              this.spaceship.setDepth(15);
+              this.spaceship.xType = "spaceship";
+
+              this.collisionCategory = this.matter.world.nextCategory();
+              this.player.setCollisionCategory(this.collisionCategory);
+
               this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
                 //console.log("collisionstart");
+                //console.log(event);
+                //console.log(bodyB);
+                //console.log(bodyA);
                 if(bodyA.gameObject != null && bodyB.gameObject != null) {
                   //console.log(bodyB);
+                  //console.log(bodyA);
                   if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "air_particle") {
                     //console.log("HIT_B");
                     bodyB.gameObject.visible = false;
@@ -115,23 +138,47 @@
                     this.hitByParticle = true;
                     bodyB.gameObject.setVelocityX(7);
                     this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
-                  }
-                  else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player") {
+                  } else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player") {
                     this.playerSprite.anims.play("amoeba_hit", true);
                     bodyB.gameObject.visible = false;
                     bodyB.gameObject.destroy();
                     this.hitByParticle = true;
                     bodyA.gameObject.setVelocityX(7);
                     this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
+                  } else if(bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") {
+                    this.player.setVisible(false);
+                    this.playerSprite.setVisible(false);
+
+                    console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
+
+                    this.spaceshipLaunchParticles = this.add.particles('particle');
+                    this.spaceshipLaunchParticles.createEmitter({
+                        alpha: { start: 1, end: 0 },
+                        scale: { start: 0.5, end: 2.5 },
+                        //tint: { start: 0xff945e, end: 0xff945e },
+                        speed: 20,
+                        accelerationY: 300,
+                        accelerationX: 150,
+                        angle: { min: -85, max: -95 },
+                        rotate: { min: -180, max: 180 },
+                        lifespan: { min: 1000, max: 1100 },
+                        blendMode: 'ADD',
+                        frequency: 110
+                    });
+
+                    this.spaceshipLaunchParticles.setPosition(this.spaceship.x -15, this.spaceship.y);
+
+                    this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
                   }
+
                 }
+
               }, this);
+
 
               this.cursor = this.input.keyboard.createCursorKeys();
 
               this.cameras.main.startFollow(this.player, true, 0.09, 0.09);  //make camera follow the player
-
-              console.log(this.cameras.main);
 
               //TODO: re-enable when tweaking the particles
               this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
@@ -172,24 +219,29 @@
 
           update: function() {
 
-              this.playerSprite.setX(this.player.x);
-              this.playerSprite.setY(this.player.y);
+              if(this.player.visible) {
+                  this.playerSprite.setX(this.player.x);
+                  this.playerSprite.setY(this.player.y);
 
-              this.back.tilePositionX -= 10.5;
-              //this.front.tilePositionX = -camera.scrollX
+                  this.back.tilePositionX -= 10.5;
+                  //this.front.tilePositionX = -camera.scrollX
 
-              if(this.cursor.left.isDown && !this.hitByParticle){
-                this.player.setVelocityX(-4);
-                //this.front.tilePositionX -= 3.25;
-              }
+                  if(this.cursor.left.isDown && !this.hitByParticle){
+                    this.player.setVelocityX(-4);
+                    //this.front.tilePositionX -= 3.25;
+                  }
 
-              if(this.cursor.right.isDown && !this.hitByParticle) {
-                this.player.setVelocityX(4);
-                //this.front.tilePositionX += 3.25;
-              }
+                  if(this.cursor.right.isDown && !this.hitByParticle) {
+                    this.player.setVelocityX(4);
+                    //this.front.tilePositionX += 3.25;
+                  }
 
-              if(this.cursor.up.isDown) {
-                this.player.setVelocityY(-3);
+                  if(this.cursor.up.isDown) {
+                    this.player.setVelocityY(-3);
+                  }
+              } else {
+                this.spaceshipLaunchParticles.setPosition(this.spaceship.x -15, this.spaceship.y);
+                this.player.setPosition(this.spaceship.x, this.spaceship.y);
               }
           },
 
@@ -199,17 +251,39 @@
           },
 
           onEvent: function() {
-            var air_particle = this.matter.add.sprite(-10 ,Phaser.Math.Between(50, 280), 'particle');
+            var air_particle = this.matter.add.sprite(this.cameras.main.scrollX ,Phaser.Math.Between(50, 550), 'particle');
+            var displayRadius = Phaser.Math.Between(7, 15);
             air_particle.xType = "air_particle";
             air_particle.setBody({
                 type: 'polygon',
                 sides: 7,
-                radius: 13
+                radius: displayRadius
               }
             );
+
+            air_particle.setCollisionCategory(this.collisionCategory);
+            air_particle.setCollidesWith([this.collisionCategory]);
+            air_particle.setDisplaySize(displayRadius + 5, displayRadius + 5);  //Swag at matching tyhe image size to radius
             air_particle.setIgnoreGravity(true);
             air_particle.setFrictionAir(0);
             air_particle.setVelocityX(10);
+          },
+
+          launchShip: function(velocity) {
+            if (velocity >= 10) {
+              console.log("Go to end game win screen");
+            } else {
+              this.spaceship.setStatic(false);
+              this.spaceship.setIgnoreGravity(true);
+              this.spaceship.setVelocityY(-10);
+              this.spaceship.setVelocityX(-5);
+
+              this.time.addEvent({ delay: 3000, callback: this.showEndGameWinScene, callbackScope: this, loop: false });
+            }
+          },
+
+          showEndGameWinScene: function() {
+            console.log("showEndGameWinScene()");
           }
       });
 
