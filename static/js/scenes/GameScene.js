@@ -48,13 +48,14 @@ export default class GameScene extends Phaser.Scene {
 
         this.player = this.matter.add.sprite(7100, 50);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
+        this.playerSprite.setDepth(10);
         this.player.xType = "player";
-        this.player.setDepth(10);
         this.player.setBody({
         type: 'polygon',
         sides: 7,
         radius: 24
         });
+        this.player.setDepth(11);
         this.playerSprite.anims.play("amoeba_idle", true);
 
         this.spaceship = this.matter.add.sprite(3880, 450, "spaceship");
@@ -123,7 +124,7 @@ export default class GameScene extends Phaser.Scene {
                 frequency: 110
             });
 
-            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -15, this.spaceship.y);
+            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
 
             this.levelCompletedMusic.play();
             this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
@@ -149,28 +150,34 @@ export default class GameScene extends Phaser.Scene {
         //Full size segment example
         this.levelSegment_01 = this.add.tileSprite(6445,300,755,300,'mid_reg');
         this.levelSegment_01.setDisplayOrigin(0);
+        this.levelSegment_01.setDepth(5);
 
         //Partial Size Segment example
         this.levelSegment_02 = this.add.tileSprite(6064,300,381,300,'mid_reg');
         this.levelSegment_02.setDisplayOrigin(0);
+        this.levelSegment_02.setDepth(5);
 
         //Full size segment example diff Color
         this.levelSegment_03 = this.add.tileSprite(5309,300,755,300,'mid_white');
         this.levelSegment_03.setDisplayOrigin(0);
+        this.levelSegment_03.setDepth(5);
 
         //Full size segment example
         this.levelSegment_04 = this.add.tileSprite(4554,300,755,300,'mid_reg');
         this.levelSegment_04.setDisplayOrigin(0);
+        this.levelSegment_04.setDepth(5);
 
         //Partial size segment example curved
         this.levelSegment_05 = this.add.tileSprite(4173,394,381,300,'mid_reg');
         this.levelSegment_05.setDisplayOrigin(0);
         this.levelSegment_05.setRotation(-0.244346);
+        this.levelSegment_05.setDepth(5);
 
         //Partial size segment example curved
         this.levelSegment_06 = this.add.tileSprite(3805,485,381,300,'mid_reg');
         this.levelSegment_06.setDisplayOrigin(0);
         this.levelSegment_06.setRotation(-0.244346);
+        this.levelSegment_06.setDepth(5);
     }
 
     update() {
@@ -195,7 +202,7 @@ export default class GameScene extends Phaser.Scene {
                 this.player.setVelocityY(-3);
             }
         } else {
-            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -15, this.spaceship.y);
+            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
             this.player.setPosition(this.spaceship.x, this.spaceship.y);
         }
     }

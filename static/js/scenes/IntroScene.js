@@ -2,11 +2,11 @@ export default class IntroScene extends Phaser.Scene {
     constructor() {
         super("Intro");
         console.log("IntroScene.constructor()");
-        this.keyPressed = false;
     }
 
     preload() {
         console.log("IntroScene.preload()");
+        this.keyPressed = false;
         this.introMusic = this.sound.add("intro", { loop: false });
         this.introImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro");
     }
