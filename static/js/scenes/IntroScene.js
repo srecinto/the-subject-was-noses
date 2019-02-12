@@ -6,9 +6,17 @@ export default class IntroScene extends Phaser.Scene {
 
     preload() {
         console.log("IntroScene.preload()");
-        this.keyPressed = false;
+        this.keyPressedCounter = 0;
+
         this.introMusic = this.sound.add("intro", { loop: false });
-        this.introImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro");
+        this.introImage_03 = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro_03");
+        this.introImage_03.setDepth(1);
+        this.introImage_02 = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro_02");
+        this.introImage_02.setDepth(2);
+        this.introImage_01 = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro_01");
+        this.introImage_01.setDepth(3);
+        this.introImage_prof = this.add.image(125, 462, "intro_prof");
+        this.introImage_prof.setDepth(10);
     }
 
     create () {
@@ -18,19 +26,28 @@ export default class IntroScene extends Phaser.Scene {
         //
 
         this.input.keyboard.on('keyup', function (event) {
-            if(!this.keyPressed) {
-                this.keyPressed = true;
-                this.introMusic.stop();
-                this.scene.start("Game");
-            }
+            this.clickHandler();
         }, this);
 
-        this.time.addEvent({ delay: 3000, callback: this.pressAnykey, callbackScope: this, loop: false });
+        this.input.on('pointerdown', function (pointer) {
+            this.clickHandler();
+        }, this);
     }
 
-    pressAnykey() {
-        console.log("IntroScene.pressAnykey()");
-        //Display "Press SPACE to continue"
-        //Add SPACE Input handler
+    clickHandler () {
+        console.log("IntroScene.clickHandler()");
+        this.keyPressedCounter++;
+        switch(this.keyPressedCounter) {
+            case 1:
+                this.introImage_02.setDepth(4);
+                break;
+            case 2:
+                this.introImage_03.setDepth(5);
+                break;
+            case 3:
+                this.introMusic.stop();
+                this.scene.start("Game");
+                break;
+        }
     }
 };
