@@ -135,6 +135,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         this.player = this.matter.add.sprite(7100, 50);
+        //this.player = this.matter.add.sprite(100, 50);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
         this.playerSprite.setDepth(10);
         this.player.xType = "player";
@@ -146,7 +147,7 @@ export default class GameScene extends Phaser.Scene {
         this.player.setDepth(11);
         this.playerSprite.anims.play("amoeba_idle", true);
 
-        this.spaceship = this.matter.add.sprite(280, 500, "spaceship");
+        this.spaceship = this.matter.add.sprite(470, 450, "spaceship");
         this.spaceship.setBody({
         type: 'polygon',
         sides: 5,
