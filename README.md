@@ -13,6 +13,8 @@ by Insanitype - https://fontmeme.com/fonts/brady-bunch-font/
 Monike Zee
 
 ## UX / Game Design
+Shoze
+
 Diego
 
 ## Game Design

@@ -36,7 +36,8 @@ export default class TitleScene extends Phaser.Scene {
                 scene.add.text(600, 410, "Indian Man", { fontFamily: "Brady Bunch Remastered", fontSize: 24, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
 
                 scene.add.text(100, 450, "UX", { fontFamily: "Brady Bunch Remastered", fontSize: 30, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
-                scene.add.text(100, 480, "Diego", { fontFamily: "Brady Bunch Remastered", fontSize: 24, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
+                scene.add.text(100, 480, "Shoze", { fontFamily: "Brady Bunch Remastered", fontSize: 24, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
+                scene.add.text(100, 510, "Diego", { fontFamily: "Brady Bunch Remastered", fontSize: 24, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
 
                 scene.add.text(600, 450, "Design", { fontFamily: "Brady Bunch Remastered", fontSize: 30, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
                 scene.add.text(600, 480, "Indian Man", { fontFamily: "Brady Bunch Remastered", fontSize: 24, color: '#ffffff' }).setShadow(2, 2, "#333333", 2, false, true);
