@@ -181,19 +181,23 @@ export default class GameScene extends Phaser.Scene {
             bodyA.gameObject.destroy();
             //bodyB.destroy();
           } else if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player") {
+
             this.playerSprite.anims.play("amoeba_hit", true);
             bodyA.gameObject.visible = false;
             bodyA.gameObject.destroy();
             this.hitByParticle = true;
-            bodyB.gameObject.setVelocityX(7);
-            this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
+            bodyB.gameObject.setVelocityX(3);
+            this.resetFlagEvent = this.time.delayedCall(Phaser.Math.Between(500,1000), this.resetFlag, [], this);
+
           } else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player") {
+
             this.playerSprite.anims.play("amoeba_hit", true);
             bodyB.gameObject.visible = false;
             bodyB.gameObject.destroy();
             this.hitByParticle = true;
-            bodyA.gameObject.setVelocityX(7);
-            this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
+            bodyA.gameObject.setVelocityX(3);
+            this.resetFlagEvent = this.time.delayedCall(Phaser.Math.Between(500,1000), this.resetFlag, [], this);
+
           } else if((bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") &&
                     (bodyA.gameObject.xType == "player" || bodyB.gameObject.xType == "player")) {
             if(!this.playerReachedShip) {
