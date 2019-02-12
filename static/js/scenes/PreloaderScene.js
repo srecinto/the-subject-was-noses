@@ -1,4 +1,4 @@
-import makeAnimations from '/js/config/animations.js';
+import makeAnimations from '../config/animations.js';
 
 export default class PreloaderScene extends Phaser.Scene {
     constructor() {
@@ -52,29 +52,35 @@ export default class PreloaderScene extends Phaser.Scene {
     loadAllImages() {
         console.log("PreloaderScene.loadAllImages()");
 
-        this.load.spritesheet('amoeba', '/assets/images/amoeba.png', { frameWidth: 68, frameHeight: 77 });
-        this.load.image("foreground_brown", "/assets/images/fg.png");
-        this.load.image("foreground_white", "/assets/images/fg_white.png");
-        this.load.image("lace", "/assets/images/lace.png");
-        this.load.image("mid_reg", "/assets/images/mid_reg.png");
-        this.load.image("mid_white", "/assets/images/mid_white.png");
-        this.load.image("particle", "/assets/images/particle.png");
-        this.load.image("sky", "/assets/images/sky.png");
-        this.load.image("spaceship", "/assets/images/spaceship.png");
-        this.load.image("ui_ball_2", "/assets/images/ui_ball_2.png");
-        this.load.image("ui_ball", "/assets/images/ui_ball.png");
-        this.load.image("ui_meter", "/assets/images/ui_meter.png");
-        this.load.image('spaceship', '/assets/images/spaceship.png');
-        this.load.image('intro', '/assets/images/intro.png');
-        this.load.image('outtro', '/assets/images/intro.png');
-        this.load.image('gameover', '/assets/images/intro.png');
+        this.load.spritesheet('amoeba', './assets/images/amoeba.png', { frameWidth: 68, frameHeight: 77 });
+        this.load.image("foreground_brown", "./assets/images/fg.png");
+        this.load.image("foreground_white", "./assets/images/fg_white.png");
+        this.load.image("lace", "./assets/images/lace.png");
+        this.load.image("mid_reg", "./assets/images/mid_reg.png");
+        this.load.image("mid_white", "./assets/images/mid_white.png");
+        this.load.image("particle", "./assets/images/particle.png");
+        this.load.image("particle_01", "./assets/images/spec1.png");
+        this.load.image("particle_02", "./assets/images/spec2.png");
+        this.load.image("sky", "./assets/images/sky.png");
+        this.load.image("spaceship", "./assets/images/spaceship.png");
+        this.load.image("ui_ball", "./assets/images/ui_football.png");
+        this.load.image("ui_ship", "./assets/images/ui_ship.png");
+        this.load.image("ui_spec", "./assets/images/ui_spec.png");
+        this.load.image("ui_meter", "./assets/images/ui_nose.png");
+        this.load.image('spaceship', './assets/images/spaceship.png');
+        this.load.image('intro_01', './assets/images/01.jpg');
+        this.load.image('intro_02', './assets/images/02.jpg');
+        this.load.image('intro_03', './assets/images/03.jpg');
+        this.load.image('intro_prof', './assets/images/proff.png');
+        this.load.image('outtro', './assets/images/intro.png');
+        this.load.image('gameover', './assets/images/intro.png');
 
-        this.load.audio("title", "/assets/audio/title.wav");
-        this.load.audio("intro", "/assets/audio/intro.wav");
-        this.load.audio("outtro", "/assets/audio/outtro.wav");
-        this.load.audio("gameOver", "/assets/audio/gameover.wav");
-        this.load.audio("levelCompleted", "/assets/audio/levelCompleted.wav");
-        this.load.audio("main", "/assets/audio/main.mp3");
+        this.load.audio("title", "./assets/audio/title.wav");
+        this.load.audio("intro", "./assets/audio/intro.wav");
+        this.load.audio("outtro", "./assets/audio/outtro.wav");
+        this.load.audio("gameOver", "./assets/audio/gameover.wav");
+        this.load.audio("levelCompleted", "./assets/audio/levelCompleted.wav");
+        this.load.audio("main", "./assets/audio/main.mp3");
 
         this.load.script("webfont", "https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js");
     }
