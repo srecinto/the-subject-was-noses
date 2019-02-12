@@ -8,7 +8,7 @@ export default class GameOverScene extends Phaser.Scene {
         console.log("GameOverScene.preload()");
         this.keyPressed = false;
         this.gameoverMusic = this.sound.add("gameOver", { loop: false });
-        this.gameoverImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "outtro");
+        this.gameoverImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "gameover");
     }
 
     create () {
