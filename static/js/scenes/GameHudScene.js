@@ -14,7 +14,7 @@ export default class GameHudScene extends Phaser.Scene {
         this.timer.setOrigin(0);
         //this.timer.setDisplaySize(760, 90);
 
-        this.miniMap = this.add.image(0, 499, "ui_ship");
+        this.miniMap = this.add.image(0, 500, "ui_ship");
         this.miniMap.setOrigin(0);
 
         this.miniMe = this.add.image(740, 535, "ui_spec");
