@@ -192,7 +192,8 @@ export default class GameScene extends Phaser.Scene {
             this.hitByParticle = true;
             bodyA.gameObject.setVelocityX(7);
             this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
-          } else if(bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") {
+          } else if((bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") &&
+                    (bodyA.gameObject.xType == "player" || bodyB.gameObject.xType == "player")) {
             if(!this.playerReachedShip) {
                 this.playerReachedShip = true;
                 this.player.setVisible(false);
@@ -240,13 +241,15 @@ export default class GameScene extends Phaser.Scene {
         //TODO: re-enable when tweaking the particles
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
-        this.front_00 = this.add.tileSprite(200,657,800,143,'foreground_brown');
+        //this.front_00 = this.add.tileSprite(200,657,800,143,'foreground_brown');
+        this.front_00 = this.add.tileSprite(200,617,800,143,'foreground_brown');
         this.front_00.setDisplayOrigin(0);
         this.front_00.scrollFactorX = .8;
         this.front_00.setDepth(50);
         this.front_00.setRotation(-0.244346)
 
-        this.front_01 = this.add.tileSprite(1000,457,7200,143,'foreground_brown');
+        //this.front_01 = this.add.tileSprite(1000,457,7200,143,'foreground_brown');
+        this.front_01 = this.add.tileSprite(1000,417,7200,143,'foreground_brown');
         this.front_01.setDisplayOrigin(0);
         this.front_01.scrollFactorX = .8;
         this.front_01.setDepth(50);
