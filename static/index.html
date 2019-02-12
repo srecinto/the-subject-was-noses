@@ -8,12 +8,12 @@
 
             @font-face {
                 font-family: "Brady Bunch Remastered";
-                src: url('/assets/fonts/BradyBunchRemastered.eot'); /* IE9 Compat Modes */
-                src: url('/assets/fonts/BradyBunchRemastered.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                     url('/assets/fonts/BradyBunchRemastered.woff2') format('woff2'), /* Super Modern Browsers */
-                     url('/assets/fonts/BradyBunchRemastered.woff') format('woff'), /* Pretty Modern Browsers */
-                     url('/assets/fonts/BradyBunchRemastered.ttf')  format('truetype'), /* Safari, Android, iOS */
-                     url('/assets/fonts/BradyBunchRemastered.svg#svgFontName') format('svg'); /* Legacy iOS */
+                src: url('./assets/fonts/BradyBunchRemastered.eot'); /* IE9 Compat Modes */
+                src: url('./assets/fonts/BradyBunchRemastered.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                     url('./assets/fonts/BradyBunchRemastered.woff2') format('woff2'), /* Super Modern Browsers */
+                     url('./assets/fonts/BradyBunchRemastered.woff') format('woff'), /* Pretty Modern Browsers */
+                     url('./assets/fonts/BradyBunchRemastered.ttf')  format('truetype'), /* Safari, Android, iOS */
+                     url('./assets/fonts/BradyBunchRemastered.svg#svgFontName') format('svg'); /* Legacy iOS */
 
             }
           
@@ -24,55 +24,12 @@
             #gameCanvas {
                 display: inline-block
             }
-
-            .title {
-                font-family: "Brady Bunch Remastered";
-                font-size: 42;
-                color: #ffffff;
-            }
-
-            .title2 {
-                font-family: "Brady Bunch Remastered";
-                font-size: 32;
-                color: #ffffff;
-            }
-
-            .instructions {
-                font-family: "Brady Bunch Remastered";
-                font-size: 18;
-                color: #ffffff;
-                font-style: italic;
-            }
-
-            .gameInfo {
-                font-family: "Brady Bunch Remastered";
-                font-size: 14;
-                color: #cccccc;
-            }
         </style>
-        <script type="module" src="/js/main.js"></script>
+        <script type="module" src="./js/main.js"></script>
     </head>
     <body>
         <div class="gameCanvasContainer">
-            <div>
-                <h1 class="title">TV Game Jam</h1>
-                <h2 class="title2">The Football Launch</h2>
-            </div>
             <div id="gameCanvas"></div>
-            <p class="instructions">
-                Use the Arrow keys to move left, right and up.
-            </p>
-            <p class="gameInfo">
-                <strong>Inspired by:</strong> The Brady Bunch Episode 18 “The Subject Was Noses”</br>
-                <a href="https://bradybunchreviewed.wordpress.com/2018/05/04/episode-18-the-subject-was-noses/" target="_new">Episode Reference</a></br></br>
-                <strong>Episode Synopsis:</strong></br>
-                <strong>Notes:</strong></br>
-                I remember this episode when I was a kid, and while it was kinda funny back then, for this game Idea, we wanted to avoid the typical “Hit Marcia with a football in the face” game.  We wanted to try a completely different take on this and strongly base it off of the title.</br></br>
-                <strong>Infamous Scene</strong></br>
-                <a href="https://www.youtube.com/watch?v=k04Wv0fydvU" target="_new">Oh My Nose Meme</a></br></br>
-                <strong>Episode</strong></br>
-                <a href="https://www.youtube.com/watch?v=vPaSLyHxqSs" target="_new">Episode</a></br></br>
-            </p>
         </div>
     </body>
 </html>
