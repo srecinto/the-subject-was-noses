@@ -277,7 +277,7 @@ export default class GameScene extends Phaser.Scene {
             this.playerSprite.setX(this.player.x);
             this.playerSprite.setY(this.player.y);
 
-            this.back.tilePositionX -= 10.5;
+            this.back.tilePositionX -= 40.5;
             //this.front.tilePositionX = -camera.scrollX
 
             if(this.cursor.left.isDown && !this.hitByParticle){
