@@ -14,22 +14,28 @@ export default class GameOverScene extends Phaser.Scene {
     create () {
         console.log("GameOverScene.create()");
         this.gameoverMusic.play();
-
         this.time.addEvent({ delay: 1000, callback: this.setUpAnykeyEvent, callbackScope: this, loop: false });
-
-
-
     }
 
     setUpAnykeyEvent() {
         console.log("GameOverScene.setUpAnykeyEvent()");
+
         this.input.keyboard.on('keyup', function (event) {
-            if(!this.keyPressed) {
-                this.keyPressed = true;
-                this.gameoverMusic.stop();
-                this.scene.start("Title");
-            }
+            this.clickHandler();
         }, this);
+
+        this.input.on('pointerdown', function (pointer) {
+            this.clickHandler();
+        }, this);
+    }
+
+    clickHandler () {
+        console.log("OuttroScene.clickHandler()");
+        if(!this.keyPressed) {
+            this.keyPressed = true;
+            this.gameoverMusic.stop();
+            this.scene.start("Title");
+        }
     }
 
 };

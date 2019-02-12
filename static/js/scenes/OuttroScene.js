@@ -15,14 +15,24 @@ export default class OuttroScene extends Phaser.Scene {
         console.log("OuttroScene.create()");
         this.outtroMusic.play();
 
+
         this.input.keyboard.on('keyup', function (event) {
-            if(!this.keyPressed) {
-                this.keyPressed = true;
-                this.outtroMusic.stop();
-                this.scene.start("Title");
-            }
+            this.clickHandler();
         }, this);
 
+        this.input.on('pointerdown', function (pointer) {
+            this.clickHandler();
+        }, this);
+
+    }
+
+    clickHandler () {
+        console.log("OuttroScene.clickHandler()");
+        if(!this.keyPressed) {
+            this.keyPressed = true;
+            this.outtroMusic.stop();
+            this.scene.start("Title");
+        }
     }
 
 };

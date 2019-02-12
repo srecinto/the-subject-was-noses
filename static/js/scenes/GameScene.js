@@ -303,7 +303,9 @@ export default class GameScene extends Phaser.Scene {
     }
 
     onEvent() {
-        var air_particle = this.matter.add.sprite(this.cameras.main.scrollX ,Phaser.Math.Between(50, 550), 'particle');
+        var randomNum = Phaser.Math.Between(1, 2);
+        var particleImageKey = "particle_0" + randomNum;
+        var air_particle = this.matter.add.sprite(this.cameras.main.scrollX ,Phaser.Math.Between(50, 550), particleImageKey);
         var displayRadius = Phaser.Math.Between(7, 15);
         air_particle.xType = "air_particle";
         air_particle.setBody({

@@ -58,6 +58,7 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image("lace", "./assets/images/lace.png");
         this.load.image("mid_reg", "./assets/images/mid_reg.png");
         this.load.image("mid_white", "./assets/images/mid_white.png");
+        this.load.image("particle", "./assets/images/particle.png");
         this.load.image("particle_01", "./assets/images/spec1.png");
         this.load.image("particle_02", "./assets/images/spec2.png");
         this.load.image("sky", "./assets/images/sky.png");
