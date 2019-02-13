@@ -72,7 +72,6 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image('intro_prof', './assets/images/proff.png');
         this.load.image('outtro', './assets/images/end_screen_win.png');
         this.load.image('gameover', './assets/images/end_screen_fail.png');
-
         this.load.audio("title", "./assets/audio/title.mp3");
         this.load.audio("intro", "./assets/audio/intro.wav");
         this.load.audio("outtro", "./assets/audio/outtro.wav");
