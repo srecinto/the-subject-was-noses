@@ -19,6 +19,9 @@ export default class IntroScene extends Phaser.Scene {
         this.introImage_prof.setDepth(10);
 
         this.selectSoundFX = this.sound.add("select", { loop: false });
+        this.germ_mlemSoundFX = this.sound.add("germ_mlem", { loop: false });
+        this.germ_mlemSoundFX = this.sound.add("germ_mlem", { loop: false });
+        this.germ_mlemSoundFX = this.sound.add("germ_mlem", { loop: false });
     }
 
     create () {

@@ -5,6 +5,12 @@ export default class GameHudScene extends Phaser.Scene {
         console.log("GameHudScene.constructor()");
     }
 
+    preload () {
+        console.log("GameHudScene.preload()");
+        this.isNearTheEnd = false;
+        this.getting_near_the_endSoundFX = this.sound.add("getting_near_the_end_1", { loop: false });
+    }
+
     create () {
         console.log("GameHudScene.create()");
         this.isGameOver = false;
@@ -48,6 +54,15 @@ export default class GameHudScene extends Phaser.Scene {
                 //console.log("progress: " + progress + " move: " + move + " deltaMove: " + deltaMove);
                 this.currentTimeIcon.setX(this.currentTimeIcon.x - deltaMove);
                 this.previousMove = move;
+
+                var timeLeft = this.maxTimeLimitInSeconds - this.timerEvent.getElapsedSeconds();
+
+                if(timeLeft < 11) { //Audio length for end of game warning
+                    if(!this.isNearTheEnd) {
+                        this.isNearTheEnd = true;
+                        this.getting_near_the_endSoundFX.play();
+                    }
+                }
 
                 //Move mini me on mini map
                 if(this.gameScene.cameras.main) {

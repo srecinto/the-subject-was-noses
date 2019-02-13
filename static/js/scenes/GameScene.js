@@ -30,6 +30,14 @@ export default class GameScene extends Phaser.Scene {
         console.log("GameScene.preload()");
         this.mainMusic = this.sound.add("main", { loop: true });
         this.levelCompletedMusic = this.sound.add("levelCompleted", { loop: false });
+
+        this.germ_huhSoundFX = this.sound.add("germ_huh", { loop: false });
+        this.germ_losingSoundFX = this.sound.add("germ_losing", { loop: false });
+        this.germ_pushing_against_windSoundFX = this.sound.add("germ_pushing_against_wind", { loop: false });
+        this.germ_pushing_against_wind_2SoundFX = this.sound.add("germ_pushing_against_wind_2", { loop: false });
+        this.germ_winningSoundFX = this.sound.add("germ_winning", { loop: false });
+        this.windSoundFX = this.sound.add("wind", { loop: true });
+
     }
 
     create () {
@@ -37,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
         this.playerReachedShip = false;
         this.scene.launch("GameHud");
         this.mainMusic.play();
+        this.windSoundFX.play();
         //342 > 310 > 294
         this.back = this.add.tileSprite(7200/2,600/2,7200,600,'sky');
 
@@ -183,6 +192,7 @@ export default class GameScene extends Phaser.Scene {
           } else if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player") {
 
             this.playerSprite.anims.play("amoeba_hit", true);
+            this.germ_huhSoundFX.play();
             bodyA.gameObject.visible = false;
             bodyA.gameObject.destroy();
             this.hitByParticle = true;
@@ -192,6 +202,7 @@ export default class GameScene extends Phaser.Scene {
           } else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player") {
 
             this.playerSprite.anims.play("amoeba_hit", true);
+            this.germ_huhSoundFX.play();
             bodyB.gameObject.visible = false;
             bodyB.gameObject.destroy();
             this.hitByParticle = true;
@@ -205,6 +216,8 @@ export default class GameScene extends Phaser.Scene {
                 this.player.setVisible(false);
                 this.playerSprite.setVisible(false);
                 this.mainMusic.stop();
+                this.windSoundFX.stop();
+                this.germ_winningSoundFX.play();
 
                 console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
 
@@ -358,6 +371,8 @@ export default class GameScene extends Phaser.Scene {
         if(!this.playerReachedShip) {
             console.log("showEndGameLoseScene()");
             this.mainMusic.stop();
+            this.windSoundFX.stop();
+            this.germ_losingSoundFX.play();
             this.scene.start("GameOver");
         }
     }

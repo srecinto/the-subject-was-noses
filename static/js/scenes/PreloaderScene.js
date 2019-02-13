@@ -80,15 +80,15 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.audio("levelCompleted", "./assets/audio/levelCompleted.wav");
         this.load.audio("main", "./assets/audio/main.mp3");
 
-        this.load.audio("germ huh", "./assets/audio/sound_fx/germ huh_2.wav");
-        this.load.audio("germ losing_2", "./assets/audio/sound_fx/germ losing_2.wav");
-        this.load.audio("germ mlem 1", "./assets/audio/sound_fx/germ mlem 1_1.wav");
-        this.load.audio("germ mlem 2", "./assets/audio/sound_fx/germ mlem 2_1.wav");
-        this.load.audio("germ mlem 3", "./assets/audio/sound_fx/germ mlem 3_1.wav");
-        this.load.audio("germ pushing against wind", "./assets/audio/sound_fx/germ pushing against wind 2_2.wav");
-        this.load.audio("germ pushing against wind_2", "./assets/audio/sound_fx/germ pushing against wind_2.wav");
-        this.load.audio("germ winning", "./assets/audio/sound_fx/germ winning_2.wav");
-        this.load.audio("getting near the end_1", "./assets/audio/sound_fx/getting near the end_1.wav");
+        this.load.audio("germ_huh", "./assets/audio/sound_fx/germ huh_2.wav");
+        this.load.audio("germ_losing", "./assets/audio/sound_fx/germ losing_2.wav");
+        this.load.audio("germ_mlem 1", "./assets/audio/sound_fx/germ mlem 1_1.wav");
+        this.load.audio("germ_mlem 2", "./assets/audio/sound_fx/germ mlem 2_1.wav");
+        this.load.audio("germ_mlem 3", "./assets/audio/sound_fx/germ mlem 3_1.wav");
+        this.load.audio("germ_pushing_against_wind", "./assets/audio/sound_fx/germ pushing against wind 2_2.wav");
+        this.load.audio("germ_pushing_against_wind_2", "./assets/audio/sound_fx/germ pushing against wind_2.wav");
+        this.load.audio("germ_winning", "./assets/audio/sound_fx/germ winning_2.wav");
+        this.load.audio("getting_near_the_end_1", "./assets/audio/sound_fx/getting near the end_1.wav");
         this.load.audio("select", "./assets/audio/sound_fx/select_1.wav");
         this.load.audio("wind", "./assets/audio/sound_fx/wind.wav");
 
