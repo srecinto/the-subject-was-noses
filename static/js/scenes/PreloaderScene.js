@@ -82,9 +82,9 @@ export default class PreloaderScene extends Phaser.Scene {
 
         this.load.audio("germ_huh", "./assets/audio/sound_fx/germ huh_2.wav");
         this.load.audio("germ_losing", "./assets/audio/sound_fx/germ losing_2.wav");
-        this.load.audio("germ_mlem 1", "./assets/audio/sound_fx/germ mlem 1_1.wav");
-        this.load.audio("germ_mlem 2", "./assets/audio/sound_fx/germ mlem 2_1.wav");
-        this.load.audio("germ_mlem 3", "./assets/audio/sound_fx/germ mlem 3_1.wav");
+        this.load.audio("germ_mlem_1", "./assets/audio/sound_fx/germ mlem 1_1.wav");
+        this.load.audio("germ_mlem_2", "./assets/audio/sound_fx/germ mlem 2_1.wav");
+        this.load.audio("germ_mlem_3", "./assets/audio/sound_fx/germ mlem 3_1.wav");
         this.load.audio("germ_pushing_against_wind", "./assets/audio/sound_fx/germ pushing against wind 2_2.wav");
         this.load.audio("germ_pushing_against_wind_2", "./assets/audio/sound_fx/germ pushing against wind_2.wav");
         this.load.audio("germ_winning", "./assets/audio/sound_fx/germ winning_2.wav");
