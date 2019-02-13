@@ -8,7 +8,8 @@ export default class GameOverScene extends Phaser.Scene {
         console.log("GameOverScene.preload()");
         this.keyPressed = false;
         this.gameoverMusic = this.sound.add("gameOver", { loop: false });
-        this.gameoverImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "outtro");
+        this.gameoverImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "gameover");
+        this.selectSoundFX = this.sound.add("select", { loop: false });
     }
 
     create () {
@@ -30,9 +31,10 @@ export default class GameOverScene extends Phaser.Scene {
     }
 
     clickHandler () {
-        console.log("OuttroScene.clickHandler()");
+        console.log("GameOverScene.clickHandler()");
         if(!this.keyPressed) {
             this.keyPressed = true;
+            this.selectSoundFX.play();
             this.gameoverMusic.stop();
             this.scene.start("Title");
         }

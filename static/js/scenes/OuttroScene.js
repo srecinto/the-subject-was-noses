@@ -9,6 +9,7 @@ export default class OuttroScene extends Phaser.Scene {
         this.keyPressed = false;
         this.outtroMusic = this.sound.add("outtro", { loop: false });
         this.outtroImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "outtro");
+        this.selectSoundFX = this.sound.add("select", { loop: false });
     }
 
     create () {
@@ -30,6 +31,7 @@ export default class OuttroScene extends Phaser.Scene {
         console.log("OuttroScene.clickHandler()");
         if(!this.keyPressed) {
             this.keyPressed = true;
+            this.selectSoundFX.play();
             this.outtroMusic.stop();
             this.scene.start("Title");
         }
