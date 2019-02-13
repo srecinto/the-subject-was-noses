@@ -23,6 +23,7 @@ export default class GameScene extends Phaser.Scene {
         this.hud;
 
         this.playerReachedShip = false;
+        this.isFlyGrunting = false;
 
     }
 
@@ -30,6 +31,14 @@ export default class GameScene extends Phaser.Scene {
         console.log("GameScene.preload()");
         this.mainMusic = this.sound.add("main", { loop: true });
         this.levelCompletedMusic = this.sound.add("levelCompleted", { loop: false });
+
+        this.germ_huhSoundFX = this.sound.add("germ_huh", { loop: false });
+        this.germ_losingSoundFX = this.sound.add("germ_losing", { loop: false });
+        this.germ_pushing_against_windSoundFX = this.sound.add("germ_pushing_against_wind", { loop: false });
+        this.germ_pushing_against_wind2SoundFX = this.sound.add("germ_pushing_against_wind_2", { loop: false });
+        this.germ_winningSoundFX = this.sound.add("germ_winning", { loop: false });
+        this.windSoundFX = this.sound.add("wind", { loop: true });
+
     }
 
     create () {
@@ -37,6 +46,7 @@ export default class GameScene extends Phaser.Scene {
         this.playerReachedShip = false;
         this.scene.launch("GameHud");
         this.mainMusic.play();
+        this.windSoundFX.play();
         //342 > 310 > 294
         this.back = this.add.tileSprite(7200/2,600/2,7200,600,'sky');
 
@@ -135,6 +145,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         this.player = this.matter.add.sprite(7100, 50);
+        //this.player = this.matter.add.sprite(100, 50);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
         this.playerSprite.setDepth(10);
         this.player.xType = "player";
@@ -146,7 +157,7 @@ export default class GameScene extends Phaser.Scene {
         this.player.setDepth(11);
         this.playerSprite.anims.play("amoeba_idle", true);
 
-        this.spaceship = this.matter.add.sprite(280, 500, "spaceship");
+        this.spaceship = this.matter.add.sprite(470, 450, "spaceship");
         this.spaceship.setBody({
         type: 'polygon',
         sides: 5,
@@ -160,8 +171,14 @@ export default class GameScene extends Phaser.Scene {
 
         this.collisionCategory = this.matter.world.nextCategory();
         this.player.setCollisionCategory(this.collisionCategory);
-        this.spaceship.setCollisionCategory(this.collisionCategory);
-        this.spaceship.setCollidesWith([this.collisionCategory]);
+
+        this.collisionShipCategory = this.matter.world.nextCategory();
+        this.spaceship.setCollisionCategory(this.collisionShipCategory);
+
+        var gameHud = this.scene.get('GameHud');
+        gameHud.events.on('gameOver', function () {
+            this.showEndGameLoseScene();
+        }, this);
 
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         //console.log("collisionstart");
@@ -179,19 +196,29 @@ export default class GameScene extends Phaser.Scene {
             bodyA.gameObject.destroy();
             //bodyB.destroy();
           } else if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player") {
+
             this.playerSprite.anims.play("amoeba_hit", true);
+            this.germ_pushing_against_windSoundFX.stop();
+            this.germ_pushing_against_wind2SoundFX.stop();
+            this.germ_huhSoundFX.play();
             bodyA.gameObject.visible = false;
             bodyA.gameObject.destroy();
             this.hitByParticle = true;
-            bodyB.gameObject.setVelocityX(7);
-            this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
+            bodyB.gameObject.setVelocityX(3);
+            this.resetFlagEvent = this.time.delayedCall(Phaser.Math.Between(500,1000), this.resetFlag, [], this);
+
           } else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player") {
+
             this.playerSprite.anims.play("amoeba_hit", true);
+            this.germ_pushing_against_windSoundFX.stop();
+            this.germ_pushing_against_wind2SoundFX.stop();
+            this.germ_huhSoundFX.play();
             bodyB.gameObject.visible = false;
             bodyB.gameObject.destroy();
             this.hitByParticle = true;
-            bodyA.gameObject.setVelocityX(7);
-            this.resetFlagEvent = this.time.delayedCall(2000, this.resetFlag, [], this);
+            bodyA.gameObject.setVelocityX(3);
+            this.resetFlagEvent = this.time.delayedCall(Phaser.Math.Between(500,1000), this.resetFlag, [], this);
+
           } else if((bodyA.gameObject.xType == "spaceship" || bodyB.gameObject.xType == "spaceship") &&
                     (bodyA.gameObject.xType == "player" || bodyB.gameObject.xType == "player")) {
             if(!this.playerReachedShip) {
@@ -199,6 +226,9 @@ export default class GameScene extends Phaser.Scene {
                 this.player.setVisible(false);
                 this.playerSprite.setVisible(false);
                 this.mainMusic.stop();
+                this.windSoundFX.stop();
+                gameHud.getting_near_the_endSoundFX.stop();
+                this.germ_winningSoundFX.play();
 
                 console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
 
@@ -228,12 +258,6 @@ export default class GameScene extends Phaser.Scene {
 
         }, this);
 
-        var gameHud = this.scene.get('GameHud');
-        gameHud.events.on('gameOver', function () {
-            this.showEndGameLoseScene();
-        }, this);
-
-
         this.cursor = this.input.keyboard.createCursorKeys();
 
         this.cameras.main.startFollow(this.player, true, 0.09, 0.09);  //make camera follow the player
@@ -241,6 +265,7 @@ export default class GameScene extends Phaser.Scene {
         //TODO: re-enable when tweaking the particles
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
+        /*
         //this.front_00 = this.add.tileSprite(200,657,800,143,'foreground_brown');
         this.front_00 = this.add.tileSprite(200,617,800,143,'foreground_brown');
         this.front_00.setDisplayOrigin(0);
@@ -253,6 +278,7 @@ export default class GameScene extends Phaser.Scene {
         this.front_01.setDisplayOrigin(0);
         this.front_01.scrollFactorX = .8;
         this.front_01.setDepth(50);
+        */
 
         this.levelSegment_00 = this.add.tileSprite(10,600,950,300,'mid_reg');
         this.levelSegment_00.setDisplayOrigin(0);
@@ -272,7 +298,7 @@ export default class GameScene extends Phaser.Scene {
         this.lace_01.setDisplayOrigin(0);
     }
 
-    update() {
+    update(time, delta) {
         if(this.player.visible) {
             this.playerSprite.setX(this.player.x);
             this.playerSprite.setY(this.player.y);
@@ -292,6 +318,22 @@ export default class GameScene extends Phaser.Scene {
 
             if(this.cursor.up.isDown) {
                 this.player.setVelocityY(-3);
+                if(!this.isFlyGrunting && !this.hitByParticle) {
+                    this.isFlyGrunting = true;
+                    var randomGrunt = Phaser.Math.Between(0,1);
+
+                    if(randomGrunt) {
+                        this.germ_pushing_against_wind2SoundFX.play();
+                    } else {
+                        this.germ_pushing_against_windSoundFX.play();
+                    }
+                }
+            } else {
+                if(this.isFlyGrunting) {
+                    this.isFlyGrunting = false;
+                    this.germ_pushing_against_windSoundFX.stop();
+                    this.germ_pushing_against_wind2SoundFX.stop();
+                }
             }
         } else {
             this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
@@ -309,7 +351,7 @@ export default class GameScene extends Phaser.Scene {
         var randomNum = Phaser.Math.Between(1, 2);
         var particleImageKey = "particle_0" + randomNum;
         var air_particle = this.matter.add.sprite(this.cameras.main.scrollX ,Phaser.Math.Between(50, 550), particleImageKey);
-        var displayRadius = Phaser.Math.Between(7, 15);
+        var displayRadius = 15;//Phaser.Math.Between(7, 15);
         air_particle.xType = "air_particle";
         air_particle.setBody({
             type: 'polygon',
@@ -350,6 +392,8 @@ export default class GameScene extends Phaser.Scene {
         if(!this.playerReachedShip) {
             console.log("showEndGameLoseScene()");
             this.mainMusic.stop();
+            this.windSoundFX.stop();
+            this.germ_losingSoundFX.play();
             this.scene.start("GameOver");
         }
     }

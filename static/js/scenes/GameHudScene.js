@@ -5,6 +5,12 @@ export default class GameHudScene extends Phaser.Scene {
         console.log("GameHudScene.constructor()");
     }
 
+    preload () {
+        console.log("GameHudScene.preload()");
+        this.isNearTheEnd = false;
+        this.getting_near_the_endSoundFX = this.sound.add("getting_near_the_end_1", { loop: false });
+    }
+
     create () {
         console.log("GameHudScene.create()");
         this.isGameOver = false;
@@ -14,7 +20,7 @@ export default class GameHudScene extends Phaser.Scene {
         this.timer.setOrigin(0);
         //this.timer.setDisplaySize(760, 90);
 
-        this.miniMap = this.add.image(0, 499, "ui_ship");
+        this.miniMap = this.add.image(0, 500, "ui_ship");
         this.miniMap.setOrigin(0);
 
         this.miniMe = this.add.image(740, 535, "ui_spec");
@@ -49,6 +55,15 @@ export default class GameHudScene extends Phaser.Scene {
                 this.currentTimeIcon.setX(this.currentTimeIcon.x - deltaMove);
                 this.previousMove = move;
 
+                var timeLeft = this.maxTimeLimitInSeconds - this.timerEvent.getElapsedSeconds();
+
+                if(timeLeft < 10) { //Audio length for end of game warning
+                    if(!this.isNearTheEnd) {
+                        this.isNearTheEnd = true;
+                        this.getting_near_the_endSoundFX.play();
+                    }
+                }
+
                 //Move mini me on mini map
                 if(this.gameScene.cameras.main) {
                     var miniMeX = 100 + (this.gameScene.cameras.main.scrollX / 10);
@@ -58,6 +73,7 @@ export default class GameHudScene extends Phaser.Scene {
             } else {
                 console.log("Game Over");
                 this.isGameOver = true;
+                this.getting_near_the_endSoundFX.stop();
                 this.events.emit('gameOver');
             }
         }
