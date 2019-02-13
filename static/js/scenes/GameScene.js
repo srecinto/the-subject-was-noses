@@ -23,6 +23,7 @@ export default class GameScene extends Phaser.Scene {
         this.hud;
 
         this.playerReachedShip = false;
+        this.isFlyGrunting = false;
 
     }
 
@@ -34,7 +35,7 @@ export default class GameScene extends Phaser.Scene {
         this.germ_huhSoundFX = this.sound.add("germ_huh", { loop: false });
         this.germ_losingSoundFX = this.sound.add("germ_losing", { loop: false });
         this.germ_pushing_against_windSoundFX = this.sound.add("germ_pushing_against_wind", { loop: false });
-        this.germ_pushing_against_wind_2SoundFX = this.sound.add("germ_pushing_against_wind_2", { loop: false });
+        this.germ_pushing_against_wind2SoundFX = this.sound.add("germ_pushing_against_wind_2", { loop: false });
         this.germ_winningSoundFX = this.sound.add("germ_winning", { loop: false });
         this.windSoundFX = this.sound.add("wind", { loop: true });
 
@@ -174,6 +175,11 @@ export default class GameScene extends Phaser.Scene {
         this.collisionShipCategory = this.matter.world.nextCategory();
         this.spaceship.setCollisionCategory(this.collisionShipCategory);
 
+        var gameHud = this.scene.get('GameHud');
+        gameHud.events.on('gameOver', function () {
+            this.showEndGameLoseScene();
+        }, this);
+
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
         //console.log("collisionstart");
         //console.log(event);
@@ -192,6 +198,8 @@ export default class GameScene extends Phaser.Scene {
           } else if(bodyA.gameObject.xType == "air_particle" && bodyB.gameObject.xType == "player") {
 
             this.playerSprite.anims.play("amoeba_hit", true);
+            this.germ_pushing_against_windSoundFX.stop();
+            this.germ_pushing_against_wind2SoundFX.stop();
             this.germ_huhSoundFX.play();
             bodyA.gameObject.visible = false;
             bodyA.gameObject.destroy();
@@ -202,6 +210,8 @@ export default class GameScene extends Phaser.Scene {
           } else if(bodyB.gameObject.xType == "air_particle" && bodyA.gameObject.xType == "player") {
 
             this.playerSprite.anims.play("amoeba_hit", true);
+            this.germ_pushing_against_windSoundFX.stop();
+            this.germ_pushing_against_wind2SoundFX.stop();
             this.germ_huhSoundFX.play();
             bodyB.gameObject.visible = false;
             bodyB.gameObject.destroy();
@@ -217,6 +227,7 @@ export default class GameScene extends Phaser.Scene {
                 this.playerSprite.setVisible(false);
                 this.mainMusic.stop();
                 this.windSoundFX.stop();
+                gameHud.getting_near_the_endSoundFX.stop();
                 this.germ_winningSoundFX.play();
 
                 console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
@@ -246,12 +257,6 @@ export default class GameScene extends Phaser.Scene {
         }
 
         }, this);
-
-        var gameHud = this.scene.get('GameHud');
-        gameHud.events.on('gameOver', function () {
-            this.showEndGameLoseScene();
-        }, this);
-
 
         this.cursor = this.input.keyboard.createCursorKeys();
 
@@ -293,7 +298,7 @@ export default class GameScene extends Phaser.Scene {
         this.lace_01.setDisplayOrigin(0);
     }
 
-    update() {
+    update(time, delta) {
         if(this.player.visible) {
             this.playerSprite.setX(this.player.x);
             this.playerSprite.setY(this.player.y);
@@ -313,6 +318,22 @@ export default class GameScene extends Phaser.Scene {
 
             if(this.cursor.up.isDown) {
                 this.player.setVelocityY(-3);
+                if(!this.isFlyGrunting && !this.hitByParticle) {
+                    this.isFlyGrunting = true;
+                    var randomGrunt = Phaser.Math.Between(0,1);
+
+                    if(randomGrunt) {
+                        this.germ_pushing_against_wind2SoundFX.play();
+                    } else {
+                        this.germ_pushing_against_windSoundFX.play();
+                    }
+                }
+            } else {
+                if(this.isFlyGrunting) {
+                    this.isFlyGrunting = false;
+                    this.germ_pushing_against_windSoundFX.stop();
+                    this.germ_pushing_against_wind2SoundFX.stop();
+                }
             }
         } else {
             this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);

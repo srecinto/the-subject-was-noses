@@ -28,7 +28,7 @@ export default class IntroScene extends Phaser.Scene {
             this.sound.add("germ_mlem_3", { loop: false })
             ];
 
-        this.chatScreen = [0, 1, 2, 1, 0, 2, 0, 1, 2, 0, 1, 0, 1, 0, 2, 0, 2, 1, 0];
+        this.chatScreen = [0, 1, 2, 1, 0, 2, 0, 1, 2, 0, 1, 0];
     }
 
     create () {

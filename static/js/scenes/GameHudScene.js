@@ -57,7 +57,7 @@ export default class GameHudScene extends Phaser.Scene {
 
                 var timeLeft = this.maxTimeLimitInSeconds - this.timerEvent.getElapsedSeconds();
 
-                if(timeLeft < 11) { //Audio length for end of game warning
+                if(timeLeft < 10) { //Audio length for end of game warning
                     if(!this.isNearTheEnd) {
                         this.isNearTheEnd = true;
                         this.getting_near_the_endSoundFX.play();
@@ -73,6 +73,7 @@ export default class GameHudScene extends Phaser.Scene {
             } else {
                 console.log("Game Over");
                 this.isGameOver = true;
+                this.getting_near_the_endSoundFX.stop();
                 this.events.emit('gameOver');
             }
         }
