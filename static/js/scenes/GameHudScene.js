@@ -7,6 +7,7 @@ export default class GameHudScene extends Phaser.Scene {
 
     preload () {
         console.log("GameHudScene.preload()");
+        this.playerWon = false;
         this.isNearTheEnd = false;
         this.getting_near_the_endSoundFX = this.sound.add("getting_near_the_end_1", { loop: false });
     }
@@ -57,11 +58,15 @@ export default class GameHudScene extends Phaser.Scene {
 
                 var timeLeft = this.maxTimeLimitInSeconds - this.timerEvent.getElapsedSeconds();
 
-                if(timeLeft < 10) { //Audio length for end of game warning
+                if(timeLeft < 10 && !this.playerWon) { //Audio length for end of game warning
                     if(!this.isNearTheEnd) {
                         this.isNearTheEnd = true;
                         this.getting_near_the_endSoundFX.play();
                     }
+                }
+
+                if(this.playerWon) {
+                    this.getting_near_the_endSoundFX.stop();
                 }
 
                 //Move mini me on mini map

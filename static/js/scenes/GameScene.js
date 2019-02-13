@@ -175,8 +175,8 @@ export default class GameScene extends Phaser.Scene {
         this.collisionShipCategory = this.matter.world.nextCategory();
         this.spaceship.setCollisionCategory(this.collisionShipCategory);
 
-        var gameHud = this.scene.get('GameHud');
-        gameHud.events.on('gameOver', function () {
+        this.gameHud = this.scene.get('GameHud');
+        this.gameHud.events.on('gameOver', function () {
             this.showEndGameLoseScene();
         }, this);
 
@@ -227,7 +227,8 @@ export default class GameScene extends Phaser.Scene {
                 this.playerSprite.setVisible(false);
                 this.mainMusic.stop();
                 this.windSoundFX.stop();
-                gameHud.getting_near_the_endSoundFX.stop();
+                this.gameHud.playerWon = true;
+                this.gameHud.getting_near_the_endSoundFX.stop();
                 this.germ_winningSoundFX.play();
 
                 console.log("ship x: " + this.spaceship.x + " y: " + this.spaceship.y + " width: " + this.spaceship.width + " height:" + this.spaceship.height);
@@ -249,6 +250,7 @@ export default class GameScene extends Phaser.Scene {
 
                 this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
 
+                this.gameHud.getting_near_the_endSoundFX.stop();
                 this.levelCompletedMusic.play();
                 this.time.addEvent({ delay: 2000, callback: this.launchShip, callbackScope: this, args: [1], loop: false });
             }
@@ -391,6 +393,7 @@ export default class GameScene extends Phaser.Scene {
     showEndGameLoseScene() {
         if(!this.playerReachedShip) {
             console.log("showEndGameLoseScene()");
+            this.gameHud.getting_near_the_endSoundFX.stop();
             this.mainMusic.stop();
             this.windSoundFX.stop();
             this.germ_losingSoundFX.play();
