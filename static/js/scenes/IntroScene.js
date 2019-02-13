@@ -17,6 +17,8 @@ export default class IntroScene extends Phaser.Scene {
         this.introImage_01.setDepth(3);
         this.introImage_prof = this.add.image(125, 462, "intro_prof");
         this.introImage_prof.setDepth(10);
+
+        this.selectSoundFX = this.sound.add("select", { loop: false });
     }
 
     create () {
@@ -36,6 +38,7 @@ export default class IntroScene extends Phaser.Scene {
 
     clickHandler () {
         console.log("IntroScene.clickHandler()");
+        this.selectSoundFX.play();
         this.keyPressedCounter++;
         switch(this.keyPressedCounter) {
             case 1:
