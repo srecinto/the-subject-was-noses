@@ -17,7 +17,7 @@ export default class IntroScene extends Phaser.Scene {
         this.introImage_02.setDepth(2);
         this.introImage_01 = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "intro_01");
         this.introImage_01.setDepth(3);
-        this.introImage_prof = this.add.image(125, 462, "intro_prof");
+        this.introImage_prof = this.add.image(237, 546, "intro_prof");
         this.introImage_prof.setDepth(10);
 
         this.selectSoundFX = this.sound.add("select", { loop: false });

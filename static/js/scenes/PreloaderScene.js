@@ -9,17 +9,18 @@ export default class PreloaderScene extends Phaser.Scene {
 
     preload() {
         console.log("PreloaderScene.preload()");
-        var logo = this.add.image(400, 300, "logo"); //Show logo
+        var logo = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "logo"); //Show logo
         logo.setDisplaySize(480, 360); //TODO: Dont hard code
-
         this.initProgressBar();
         this.displayLoadingText();
 
+
         this.load.on("progress", function (value) {
             //console.log(value);
+
             this.progressBar.clear();
             this.progressBar.fillStyle(0xffffff, 1);
-            this.progressBar.fillRect(250, 280, 300 * value, 30);
+            this.progressBar.fillRect(this.progressBarX + 10, this.progressBarY+10, 300 * value, 30);
             this.percentText.setText(parseInt(value * 100) + "%");
         }.bind(this));
 
@@ -107,10 +108,12 @@ export default class PreloaderScene extends Phaser.Scene {
 
     initProgressBar() {
         console.log("PreloaderScene.initProgressBar()");
+        this.progressBarX = this.cameras.main.width / 2 - 150;
+        this.progressBarY = this.cameras.main.height / 2 - 25;
         this.progressBar = this.add.graphics();
         this.progressBox = this.add.graphics();
         this.progressBox.fillStyle(0x222222, 0.8);
-        this.progressBox.fillRect(240, 270, 320, 50);
+        this.progressBox.fillRect(this.progressBarX, this.progressBarY, 320, 50);
     }
 
     displayLoadingText() {

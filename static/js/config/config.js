@@ -1,8 +1,8 @@
 export default {
     type: Phaser.WEBGL,
     parent: "gameCanvas",
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
     pixelArt: false,
     roundPixels: false,
     title: "TV Game Jam - The Subject Of Noses",
@@ -10,10 +10,10 @@ export default {
         default: 'matter',
         matter: {
             gravity: {
-                x: 2,
-                y: 3
+                x: 1.5,
+                y: 2.5
             },
-        debug: false
+        debug: true
         }
     }
 };
