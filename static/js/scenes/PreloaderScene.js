@@ -37,16 +37,14 @@ export default class PreloaderScene extends Phaser.Scene {
             this.assetText.destroy();
             //Set up animations
             makeAnimations(this);
-            this.ready();
         }.bind(this));
-
-        this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
 
         this.loadAllImages();
     }
 
     create () {
         console.log("PreloaderScene.create()");
+        this.scene.start("Title");
     }
 
     loadAllImages() {
@@ -82,6 +80,18 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.audio("levelCompleted", "./assets/audio/levelCompleted.wav");
         this.load.audio("main", "./assets/audio/main.mp3");
 
+        this.load.audio("germ huh", "./assets/audio/sound_fx/germ huh_2.wav");
+        this.load.audio("germ losing_2", "./assets/audio/sound_fx/germ losing_2.wav");
+        this.load.audio("germ mlem 1", "./assets/audio/sound_fx/germ mlem 1_1.wav");
+        this.load.audio("germ mlem 2", "./assets/audio/sound_fx/germ mlem 2_1.wav");
+        this.load.audio("germ mlem 3", "./assets/audio/sound_fx/germ mlem 3_1.wav");
+        this.load.audio("germ pushing against wind", "./assets/audio/sound_fx/germ pushing against wind 2_2.wav");
+        this.load.audio("germ pushing against wind_2", "./assets/audio/sound_fx/germ pushing against wind_2.wav");
+        this.load.audio("germ winning", "./assets/audio/sound_fx/germ winning_2.wav");
+        this.load.audio("getting near the end_1", "./assets/audio/sound_fx/getting near the end_1.wav");
+        this.load.audio("select", "./assets/audio/sound_fx/select_1.wav");
+        this.load.audio("wind", "./assets/audio/sound_fx/wind.wav");
+
         this.load.script("webfont", "https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js");
     }
 
@@ -109,7 +119,6 @@ export default class PreloaderScene extends Phaser.Scene {
         });
         this.loadingText.setOrigin(0.5, 0.5);
 
-
         this.percentText = this.make.text({
                 x: width / 2,
                 y: height / 2 - 5,
@@ -133,11 +142,4 @@ export default class PreloaderScene extends Phaser.Scene {
         this.assetText.setOrigin(0.5, 0.5);
     }
 
-    ready() {
-        console.log("PreloaderScene.ready()");
-        this.readyCount++;
-        if (this.readyCount === 1) { //TODO: Change to 2 to add loading delay
-            this.scene.start("Title");
-        }
-    }
 };

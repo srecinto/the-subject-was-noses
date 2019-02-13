@@ -8,6 +8,7 @@ export default class TitleScene extends Phaser.Scene {
     preload() {
         console.log("TitleScene.preload()");
         this.titleMusic = this.sound.add("title", { loop: true });
+        this.selectSoundFX = this.sound.add("select", { loop: false });
         this.titleBG = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "sky");
         this.titleBG = this.add.tileSprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, this.sys.game.config.width, this.sys.game.config.height, "sky");
         this.tvGameJamLogo = this.add.image(380, 150, "logo");
@@ -75,6 +76,7 @@ export default class TitleScene extends Phaser.Scene {
         this.input.on('pointerdown', function (pointer, button){
             if(button.length > 0) { // Not weorried about other buttons since there is only one
                 console.log("clicked start");
+                this.selectSoundFX.play();
                 this.titleMusic.stop();
                 this.scene.start("Intro");
             }
