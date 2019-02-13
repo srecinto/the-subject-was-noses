@@ -247,6 +247,7 @@ export default class GameScene extends Phaser.Scene {
         //TODO: re-enable when tweaking the particles
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
+        /*
         //this.front_00 = this.add.tileSprite(200,657,800,143,'foreground_brown');
         this.front_00 = this.add.tileSprite(200,617,800,143,'foreground_brown');
         this.front_00.setDisplayOrigin(0);
@@ -259,6 +260,7 @@ export default class GameScene extends Phaser.Scene {
         this.front_01.setDisplayOrigin(0);
         this.front_01.scrollFactorX = .8;
         this.front_01.setDepth(50);
+        */
 
         this.levelSegment_00 = this.add.tileSprite(10,600,950,300,'mid_reg');
         this.levelSegment_00.setDisplayOrigin(0);
