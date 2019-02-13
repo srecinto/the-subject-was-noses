@@ -24,21 +24,21 @@ export default class GameHudScene extends Phaser.Scene {
         this.miniMap = this.add.image(0, 500, "ui_ship");
         this.miniMap.setOrigin(0);
 
-        this.miniMe = this.add.image(740, 535, "ui_spec");
+        this.miniMe = this.add.image(740, 552, "ui_spec");
         //this.miniMe = this.add.image(100, 535, "ui_spec");
 
-        this.currentTimeIcon = this.add.image(760, 35, "ui_ball");  //82x57
+        this.currentTimeIcon = this.add.image(760, 50, "ui_ball");  //82x57
         //Start at 760px, end at 130px = 630 segments to move for a total of 10.5 segments (630px / 60 seconds)
         //this.currentTimeIcon = this.add.image(130, 35, "ui_ball_2");
         this.currentTimeIcon.setDepth(10);
         this.maxTimeLimitInSeconds = 60;
         this.previousMove = 0;
         this.deltaMove = 0;
-
+        /*
         this.deadlineBar = this.add.graphics();
         this.deadlineBar.fillStyle(0xff0000, 1);
         this.deadlineBar.fillRoundedRect(127, 50, 4, 40, 2);
-
+        */
         this.timerEvent = this.time.addEvent({ delay: this.maxTimeLimitInSeconds * 1000, loop: false });
 
 

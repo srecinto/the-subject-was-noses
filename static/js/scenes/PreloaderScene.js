@@ -44,6 +44,16 @@ export default class PreloaderScene extends Phaser.Scene {
 
     create () {
         console.log("PreloaderScene.create()");
+        WebFont.load({
+            custom: {
+                families: [ 'Brady Bunch Remastered' ]
+            },
+            active: function ()
+            {
+
+            }
+        });
+
         this.scene.start("Title");
     }
 
@@ -65,13 +75,13 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image("ui_ship", "./assets/images/ui_ship.png");
         this.load.image("ui_spec", "./assets/images/ui_spec.png");
         this.load.image("ui_meter", "./assets/images/ui_nose.png");
-        this.load.image('spaceship', './assets/images/spaceship.png');
         this.load.image('intro_01', './assets/images/01.jpg');
         this.load.image('intro_02', './assets/images/02.jpg');
         this.load.image('intro_03', './assets/images/03.jpg');
         this.load.image('intro_prof', './assets/images/proff.png');
         this.load.image('outtro', './assets/images/end_screen_win.png');
         this.load.image('gameover', './assets/images/end_screen_fail.png');
+        this.load.image('title', './assets/images/title_screen.jpg');
 
         this.load.audio("title", "./assets/audio/title.mp3");
         this.load.audio("intro", "./assets/audio/intro.wav");

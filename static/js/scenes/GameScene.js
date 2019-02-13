@@ -165,8 +165,8 @@ export default class GameScene extends Phaser.Scene {
         });
         this.spaceship.setStatic(true);
         this.spaceship.setIgnoreGravity(true);
-        this.spaceship.setDisplaySize(150,150);
-        this.spaceship.setDepth(15);
+        //this.spaceship.setDisplaySize(150,150);
+        this.spaceship.setDepth(24);
         this.spaceship.xType = "spaceship";
 
         this.collisionCategory = this.matter.world.nextCategory();
@@ -305,7 +305,7 @@ export default class GameScene extends Phaser.Scene {
             this.playerSprite.setX(this.player.x);
             this.playerSprite.setY(this.player.y);
 
-            this.back.tilePositionX -= 40.5;
+            this.back.tilePositionX -= 100;
             //this.front.tilePositionX = -camera.scrollX
 
             if(this.cursor.left.isDown && !this.hitByParticle){
