@@ -163,7 +163,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         //this.player = this.matter.add.sprite(7100, 50);
-        this.player = this.matter.add.sprite(100, 50);
+        this.player = this.matter.add.sprite(200, 50);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
         this.playerSprite.setDepth(10);
         this.player.xType = "player";
@@ -175,15 +175,15 @@ export default class GameScene extends Phaser.Scene {
         this.player.setDepth(11);
         this.playerSprite.anims.play("amoeba_idle", true);
 
-        this.spaceship = this.matter.add.sprite(470, 450, "spaceship");
+        this.spaceship = this.matter.add.sprite(170, 450, "spaceship");
         this.spaceship.setBody({
-        type: 'polygon',
-        sides: 5,
-        radius: 50
+            type: 'polygon',
+            sides: 5,
+            radius: 120
         });
         this.spaceship.setStatic(true);
         this.spaceship.setIgnoreGravity(true);
-        //this.spaceship.setDisplaySize(150,150);
+        this.spaceship.setDisplayOrigin(170,300);
         this.spaceship.setDepth(24);
         this.spaceship.xType = "spaceship";
 
@@ -194,6 +194,7 @@ export default class GameScene extends Phaser.Scene {
         this.spaceship.setCollisionCategory(this.collisionShipCategory);
 
         this.gameHud = this.scene.get('GameHud');
+        this.gameHud.sys.setVisible(true);
         this.gameHud.events.on('gameOver', function () {
             this.showEndGameLoseScene();
         }, this);
@@ -257,8 +258,8 @@ export default class GameScene extends Phaser.Scene {
                     scale: { start: 0.5, end: 2.5 },
                     //tint: { start: 0xff945e, end: 0xff945e },
                     speed: 20,
-                    accelerationY: 300,
-                    accelerationX: 150,
+                    accelerationY: 500,
+                    //accelerationX: 150,
                     angle: { min: -85, max: -95 },
                     rotate: { min: -180, max: 180 },
                     lifespan: { min: 1000, max: 1100 },
@@ -266,7 +267,7 @@ export default class GameScene extends Phaser.Scene {
                     frequency: 110
                 });
 
-                this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
+                this.spaceshipLaunchParticles.setPosition(this.spaceship.x, this.spaceship.y + 240);
 
                 this.gameHud.getting_near_the_endSoundFX.stop();
                 this.levelCompletedMusic.play();
@@ -285,13 +286,14 @@ export default class GameScene extends Phaser.Scene {
         //TODO: re-enable when tweaking the particles
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
 
-        this.front_00 = this.add.tileSprite(200,657,800,143,'foreground_brown');
+
+        this.front_00 = this.add.tileSprite(200,705,800,143,'foreground_brown');
         this.front_00.setDisplayOrigin(0);
         this.front_00.scrollFactorX = .8;
         this.front_00.setDepth(50);
         this.front_00.setRotation(-0.244346)
 
-        this.front_01 = this.add.tileSprite(1000,457,12600,143,'foreground_brown');
+        this.front_01 = this.add.tileSprite(1000,505,12600,143,'foreground_brown');
         this.front_01.setDisplayOrigin(0);
         this.front_01.scrollFactorX = .8;
         this.front_01.setDepth(50);
@@ -300,7 +302,7 @@ export default class GameScene extends Phaser.Scene {
         this.levelSegment_00.setDisplayOrigin(0);
         this.levelSegment_00.setRotation(-0.244346);
         //Full size segment example
-        this.levelSegment_01 = this.add.tileSprite(945,368,11650,300,'mid_reg');                    //total 32 humps
+        this.levelSegment_01 = this.add.tileSprite(945,368,11660,300,'mid_reg');                    //total 32 humps
         this.levelSegment_01.setDisplayOrigin(0);
 
         //Full size segment example diff Color
@@ -352,7 +354,7 @@ export default class GameScene extends Phaser.Scene {
                 }
             }
         } else {
-            this.spaceshipLaunchParticles.setPosition(this.spaceship.x -17, this.spaceship.y);
+            this.spaceshipLaunchParticles.setPosition(this.spaceship.x, this.spaceship.y  + 240);
             this.player.setPosition(this.spaceship.x, this.spaceship.y);
         }
 
@@ -371,9 +373,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     onEvent() {
-        var randomNum = Phaser.Math.Between(1, 2);
-        var particleImageKey = "particle_0" + randomNum;
-        var air_particle = this.matter.add.sprite(this.cameras.main.scrollX ,Phaser.Math.Between(50, 550), particleImageKey);
+        var air_particle = this.matter.add.sprite(this.cameras.main.scrollX ,Phaser.Math.Between(50, 550), "particle_01");
         var displayRadius = 15;//Phaser.Math.Between(7, 15);
         air_particle.xType = "air_particle";
         air_particle.setBody({
@@ -385,7 +385,7 @@ export default class GameScene extends Phaser.Scene {
 
         air_particle.setCollisionCategory(this.collisionCategory);
         air_particle.setCollidesWith([this.collisionCategory]);
-        air_particle.setDisplaySize(displayRadius + 5, displayRadius + 5);  //Swag at matching tyhe image size to radius
+        //air_particle.setDisplaySize(displayRadius + 5, displayRadius + 5);  //Swag at matching tyhe image size to radius
         air_particle.setIgnoreGravity(true);
         air_particle.setFrictionAir(0);
         air_particle.setVelocityX(10);
@@ -399,7 +399,7 @@ export default class GameScene extends Phaser.Scene {
             this.spaceship.setStatic(false);
             this.spaceship.setIgnoreGravity(true);
             this.spaceship.setVelocityY(-10);
-            this.spaceship.setVelocityX(-5);
+            //this.spaceship.setVelocityX(-5);
 
             this.time.addEvent({ delay: 3000, callback: this.showEndGameWinScene, callbackScope: this, loop: false });
         }
@@ -408,6 +408,7 @@ export default class GameScene extends Phaser.Scene {
     showEndGameWinScene() {
         console.log("showEndGameWinScene()");
         this.levelCompletedMusic.stop();
+        this.gameHud.sys.setVisible(false);
         this.scene.start("Outtro");
     }
 
@@ -418,6 +419,7 @@ export default class GameScene extends Phaser.Scene {
             this.mainMusic.stop();
             this.windSoundFX.stop();
             this.germ_losingSoundFX.play();
+            this.gameHud.sys.setVisible(false);
             this.scene.start("GameOver");
         }
     }

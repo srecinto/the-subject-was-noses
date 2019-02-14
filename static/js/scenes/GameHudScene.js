@@ -32,7 +32,7 @@ export default class GameHudScene extends Phaser.Scene {
         //Start at 980px, end at 150px = 830 segments to move for a total of 10.5 segments (630px / 60 seconds)
         //this.currentTimeIcon = this.add.image(130, 35, "ui_ball_2");
         this.currentTimeIcon.setDepth(10);
-        this.maxTimeLimitInSeconds = 60;
+        this.maxTimeLimitInSeconds = 120;
         this.previousMove = 0;
         this.deltaMove = 0;
         /*
