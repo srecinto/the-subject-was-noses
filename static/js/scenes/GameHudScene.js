@@ -17,9 +17,9 @@ export default class GameHudScene extends Phaser.Scene {
         this.isGameOver = false;
         this.gameScene = this.scene.get('Game');
 
-        this.timer = this.add.image(-37, 0, "ui_meter"); //was -30 for 800x600
+        this.timer = this.add.image(-39, 0, "ui_meter"); //was -30 for 800x600
         this.timer.setOrigin(0);
-        this.timer.setDisplaySize(1024, 90);
+        this.timer.setDisplaySize(1063, 90);
 
         this.miniMap = this.add.image(0, 648, "ui_ship");
         this.miniMap.setOrigin(0);
@@ -28,8 +28,8 @@ export default class GameHudScene extends Phaser.Scene {
         this.miniMe = this.add.image(1000, 713, "ui_spec");
         // Display between 100 and 940
 
-        this.currentTimeIcon = this.add.image(760, 50, "ui_ball");  //82x57
-        //Start at 760px, end at 130px = 630 segments to move for a total of 10.5 segments (630px / 60 seconds)
+        this.currentTimeIcon = this.add.image(980, 40, "ui_ball");  //82x57
+        //Start at 980px, end at 150px = 830 segments to move for a total of 10.5 segments (630px / 60 seconds)
         //this.currentTimeIcon = this.add.image(130, 35, "ui_ball_2");
         this.currentTimeIcon.setDepth(10);
         this.maxTimeLimitInSeconds = 60;
@@ -51,7 +51,7 @@ export default class GameHudScene extends Phaser.Scene {
             var progress = this.timerEvent.getProgress();
             if(progress < 1) {
                 // Move timer icon
-                var move = (progress * 630) / 100;
+                var move = (progress * 830) / 100;
                 var deltaMove = (move - this.previousMove) * 100;
                 //console.log("progress: " + progress + " move: " + move + " deltaMove: " + deltaMove);
                 this.currentTimeIcon.setX(this.currentTimeIcon.x - deltaMove);
