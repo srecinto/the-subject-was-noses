@@ -48,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
         this.mainMusic.play();
         this.windSoundFX.play();
         //342 > 310 > 294
-        this.back = this.add.tileSprite(12600/2,600/2,12600,600,'sky');
+        this.back = this.add.tileSprite(12600/2,728/2,12600,728,'sky');
 
         this.matter.world.setBounds(0, 0, 12600, 600, 32, true, true, false, true);
         this.cameras.main.setBounds(0, 0, 12600, 600);

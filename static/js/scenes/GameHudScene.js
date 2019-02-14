@@ -17,15 +17,16 @@ export default class GameHudScene extends Phaser.Scene {
         this.isGameOver = false;
         this.gameScene = this.scene.get('Game');
 
-        this.timer = this.add.image(-30, 0, "ui_meter");
+        this.timer = this.add.image(-37, 0, "ui_meter"); //was -30 for 800x600
         this.timer.setOrigin(0);
-        //this.timer.setDisplaySize(760, 90);
+        this.timer.setDisplaySize(1024, 90);
 
-        this.miniMap = this.add.image(0, 500, "ui_ship");
+        this.miniMap = this.add.image(0, 648, "ui_ship");
         this.miniMap.setOrigin(0);
+        this.miniMap.setDisplaySize(1024, 121);
 
-        this.miniMe = this.add.image(740, 552, "ui_spec");
-        //this.miniMe = this.add.image(100, 535, "ui_spec");
+        this.miniMe = this.add.image(1000, 713, "ui_spec");
+        // Display between 100 and 940
 
         this.currentTimeIcon = this.add.image(760, 50, "ui_ball");  //82x57
         //Start at 760px, end at 130px = 630 segments to move for a total of 10.5 segments (630px / 60 seconds)
@@ -71,7 +72,7 @@ export default class GameHudScene extends Phaser.Scene {
 
                 //Move mini me on mini map
                 if(this.gameScene.cameras.main) {
-                    var miniMeX = 100 + (this.gameScene.cameras.main.scrollX / 10);
+                    var miniMeX = 100 + (this.gameScene.cameras.main.scrollX / 13);
                     //console.log(miniMeX);
                     this.miniMe.setX(miniMeX);
                 }
