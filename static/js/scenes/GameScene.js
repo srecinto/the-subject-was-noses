@@ -163,7 +163,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         //this.player = this.matter.add.sprite(7100, 50);
-        this.player = this.matter.add.sprite(12400, 50);
+        this.player = this.matter.add.sprite(12400, 200);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
         this.playerSprite.setDepth(10);
         this.player.xType = "player";
@@ -345,6 +345,10 @@ export default class GameScene extends Phaser.Scene {
                     } else {
                         this.germ_pushing_against_windSoundFX.play();
                     }
+                }
+
+                if (this.player.y < 90) {
+                    this.player.setVelocityY(10);
                 }
             } else {
                 if(this.isFlyGrunting) {

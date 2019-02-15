@@ -7,13 +7,13 @@ export default class GameHudScene extends Phaser.Scene {
 
     preload () {
         console.log("GameHudScene.preload()");
-        this.playerWon = false;
-        this.isNearTheEnd = false;
         this.getting_near_the_endSoundFX = this.sound.add("getting_near_the_end_1", { loop: false });
     }
 
     create () {
         console.log("GameHudScene.create()");
+        this.playerWon = false;
+        this.isNearTheEnd = false;
         this.isGameOver = false;
         this.gameScene = this.scene.get('Game');
 
@@ -32,7 +32,7 @@ export default class GameHudScene extends Phaser.Scene {
         //Start at 980px, end at 150px = 830 segments to move for a total of 10.5 segments (630px / 60 seconds)
         //this.currentTimeIcon = this.add.image(130, 35, "ui_ball_2");
         this.currentTimeIcon.setDepth(10);
-        this.maxTimeLimitInSeconds = 120;
+        this.maxTimeLimitInSeconds = 100;
         this.previousMove = 0;
         this.deltaMove = 0;
         /*

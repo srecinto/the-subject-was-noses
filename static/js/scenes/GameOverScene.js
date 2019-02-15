@@ -34,8 +34,8 @@ export default class GameOverScene extends Phaser.Scene {
         console.log("GameOverScene.clickHandler()");
         if(!this.keyPressed) {
             this.keyPressed = true;
-            this.selectSoundFX.play();
             this.gameoverMusic.stop();
+            this.selectSoundFX.play();
             this.scene.start("Game");
         }
     }
