@@ -9,7 +9,7 @@ export default class GameOverScene extends Phaser.Scene {
         this.keyPressed = false;
         this.gameoverMusic = this.sound.add("gameOver", { loop: false });
         this.gameoverImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "gameover");
-        this.selectSoundFX = this.sound.add("select", { loop: false });
+        this.selectSoundFX = this.sound.add("pageTurn2", { loop: false });
     }
 
     create () {

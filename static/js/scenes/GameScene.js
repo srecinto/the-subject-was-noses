@@ -29,7 +29,7 @@ export default class GameScene extends Phaser.Scene {
 
     preload() {
         console.log("GameScene.preload()");
-        this.mainMusic = this.sound.add("main", { loop: true });
+        this.mainMusic = this.sound.add("main", { loop: true, volume: 0.7 });
         this.levelCompletedMusic = this.sound.add("levelCompleted", { loop: false });
 
         this.germ_huhSoundFX = this.sound.add("germ_huh", { loop: false });
@@ -163,7 +163,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         //this.player = this.matter.add.sprite(7100, 50);
-        this.player = this.matter.add.sprite(200, 50);
+        this.player = this.matter.add.sprite(12400, 50);
         this.playerSprite = this.add.sprite(7100, 50, "amoeba");
         this.playerSprite.setDepth(10);
         this.player.xType = "player";
@@ -407,7 +407,6 @@ export default class GameScene extends Phaser.Scene {
 
     showEndGameWinScene() {
         console.log("showEndGameWinScene()");
-        this.levelCompletedMusic.stop();
         this.gameHud.sys.setVisible(false);
         this.scene.start("Outtro");
     }

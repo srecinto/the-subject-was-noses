@@ -85,10 +85,9 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image('title', './assets/images/title_screen.jpg');
 
         this.load.audio("title", "./assets/audio/title.mp3");
-        this.load.audio("intro", "./assets/audio/intro.wav");
-        this.load.audio("outtro", "./assets/audio/outtro.wav");
-        this.load.audio("gameOver", "./assets/audio/gameover.wav");
-        this.load.audio("levelCompleted", "./assets/audio/levelCompleted.wav");
+        this.load.audio("intro", "./assets/audio/intro.mp3");
+        this.load.audio("gameOver", "./assets/audio/gameover.mp3");
+        this.load.audio("levelCompleted", "./assets/audio/levelCompleted.mp3");
         this.load.audio("main", "./assets/audio/main.mp3");
 
         this.load.audio("germ_huh", "./assets/audio/sound_fx/germ huh_2.wav");
@@ -102,6 +101,8 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.audio("getting_near_the_end_1", "./assets/audio/sound_fx/getting near the end_1.wav");
         this.load.audio("select", "./assets/audio/sound_fx/select_1.wav");
         this.load.audio("wind", "./assets/audio/sound_fx/wind.wav");
+        this.load.audio("pageTurn1", "./assets/audio/sound_fx/page turn 1_1.wav");
+        this.load.audio("pageTurn2", "./assets/audio/sound_fx/page turn 2_1.wav");
 
         this.load.script("webfont", "https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js");
     }
