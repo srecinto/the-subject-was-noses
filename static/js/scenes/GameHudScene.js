@@ -7,7 +7,6 @@ export default class GameHudScene extends Phaser.Scene {
 
     preload () {
         console.log("GameHudScene.preload()");
-
         this.getting_near_the_endSoundFX = this.sound.add("getting_near_the_end_1", { loop: false });
     }
 

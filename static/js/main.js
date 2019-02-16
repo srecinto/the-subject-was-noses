@@ -1,5 +1,4 @@
 import "//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.js";
-
 import config from "./config/config.js";
 import GameScene from "./scenes/GameScene.js";
 import GameHudScene from "./scenes/GameHudScene.js";
