@@ -9,7 +9,9 @@ export default class TitleScene extends Phaser.Scene {
         console.log("TitleScene.preload()");
         this.titleMusic = this.sound.add("title", { loop: true });
         this.selectSoundFX = this.sound.add("pageTurn1", { loop: false });
+
         this.titleImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "title");
+
         this.startButtonHelper = this.add.sprite(415, 250).setInteractive();
         this.startButtonHelper.setSize(223, 95);
         this.startButtonHelper.setDisplaySize(223, 95);

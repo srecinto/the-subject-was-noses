@@ -296,7 +296,7 @@ export default class GameScene extends Phaser.Scene {
         this.front_01.setDisplayOrigin(0);
         this.front_01.scrollFactorX = .8;
         this.front_01.setDepth(50);
-        
+
 
         this.levelSegment_00 = this.add.tileSprite(10,600,950,300,'mid_reg');
         this.levelSegment_00.setDisplayOrigin(0);
@@ -346,7 +346,7 @@ export default class GameScene extends Phaser.Scene {
                         this.germ_pushing_against_windSoundFX.play();
                     }
                 }
-              
+
                 if (this.player.y < 90) {
                     this.player.setVelocityY(10);
                 }
