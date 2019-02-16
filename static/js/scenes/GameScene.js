@@ -284,7 +284,7 @@ export default class GameScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, true, 0.09, 0.09);  //make camera follow the player
 
         //TODO: re-enable when tweaking the particles
-        this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this, loop: true });
+        this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this});
 
 
         this.front_00 = this.add.tileSprite(200,705,800,143,'foreground_brown');
@@ -317,11 +317,12 @@ export default class GameScene extends Phaser.Scene {
     }
 
     update(time, delta) {
+        this.back.tilePositionX -= 100;
+
         if(this.player.visible) {
             this.playerSprite.setX(this.player.x);
             this.playerSprite.setY(this.player.y);
 
-            this.back.tilePositionX -= 100;
             //this.front.tilePositionX = -camera.scrollX
             this.ShakeScreenEvent = this.time.delayedCall(20, this.shakeScreen, [], this);
             if(this.cursor.left.isDown && !this.hitByParticle){
@@ -394,6 +395,8 @@ export default class GameScene extends Phaser.Scene {
         air_particle.setFrictionAir(0);
         air_particle.setVelocityX(10);
         air_particle.setDepth(25);
+
+        this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,1000), callback: this.onEvent, callbackScope: this});
     }
 
     launchShip(velocity) {
