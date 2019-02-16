@@ -7,15 +7,12 @@ export default class OuttroScene extends Phaser.Scene {
     preload() {
         console.log("OuttroScene.preload()");
         this.keyPressed = false;
-        this.outtroMusic = this.sound.add("outtro", { loop: false });
         this.outtroImage = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "outtro");
-        this.selectSoundFX = this.sound.add("select", { loop: false });
+        this.selectSoundFX = this.sound.add("pageTurn1", { loop: false });
     }
 
     create () {
         console.log("OuttroScene.create()");
-        this.outtroMusic.play();
-
 
         this.input.keyboard.on('keyup', function (event) {
             this.clickHandler();
@@ -31,8 +28,7 @@ export default class OuttroScene extends Phaser.Scene {
         console.log("OuttroScene.clickHandler()");
         if(!this.keyPressed) {
             this.keyPressed = true;
-            this.selectSoundFX.play();
-            this.outtroMusic.stop();
+            this.scene.get('Game').levelCompletedMusic.stop();
             this.scene.start("Title");
         }
     }

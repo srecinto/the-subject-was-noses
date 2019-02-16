@@ -9,17 +9,18 @@ export default class PreloaderScene extends Phaser.Scene {
 
     preload() {
         console.log("PreloaderScene.preload()");
-        var logo = this.add.image(400, 300, "logo"); //Show logo
+        var logo = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, "logo"); //Show logo
         logo.setDisplaySize(480, 360); //TODO: Dont hard code
-
         this.initProgressBar();
         this.displayLoadingText();
 
+
         this.load.on("progress", function (value) {
             //console.log(value);
+
             this.progressBar.clear();
             this.progressBar.fillStyle(0xffffff, 1);
-            this.progressBar.fillRect(250, 280, 300 * value, 30);
+            this.progressBar.fillRect(this.progressBarX + 10, this.progressBarY+10, 300 * value, 30);
             this.percentText.setText(parseInt(value * 100) + "%");
         }.bind(this));
 
@@ -44,6 +45,15 @@ export default class PreloaderScene extends Phaser.Scene {
 
     create () {
         console.log("PreloaderScene.create()");
+        WebFont.load({
+            custom: {
+                families: [ 'Brady Bunch Remastered' ]
+            },
+            active: function ()
+            {
+
+            }
+        });
         this.scene.start("Title");
     }
 
@@ -65,18 +75,18 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image("ui_ship", "./assets/images/ui_ship.png");
         this.load.image("ui_spec", "./assets/images/ui_spec.png");
         this.load.image("ui_meter", "./assets/images/ui_nose.png");
-        this.load.image('spaceship', './assets/images/spaceship.png');
         this.load.image('intro_01', './assets/images/01.jpg');
         this.load.image('intro_02', './assets/images/02.jpg');
         this.load.image('intro_03', './assets/images/03.jpg');
         this.load.image('intro_prof', './assets/images/proff.png');
         this.load.image('outtro', './assets/images/end_screen_win.png');
         this.load.image('gameover', './assets/images/end_screen_fail.png');
+        this.load.image('title', './assets/images/title_screen.jpg');
+
         this.load.audio("title", "./assets/audio/title.mp3");
-        this.load.audio("intro", "./assets/audio/intro.wav");
-        this.load.audio("outtro", "./assets/audio/outtro.wav");
-        this.load.audio("gameOver", "./assets/audio/gameover.wav");
-        this.load.audio("levelCompleted", "./assets/audio/levelCompleted.wav");
+        this.load.audio("intro", "./assets/audio/intro.mp3");
+        this.load.audio("gameOver", "./assets/audio/gameover.mp3");
+        this.load.audio("levelCompleted", "./assets/audio/levelCompleted.mp3");
         this.load.audio("main", "./assets/audio/main.mp3");
 
         this.load.audio("germ_huh", "./assets/audio/sound_fx/germ huh_2.wav");
@@ -90,16 +100,21 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.audio("getting_near_the_end_1", "./assets/audio/sound_fx/getting near the end_1.wav");
         this.load.audio("select", "./assets/audio/sound_fx/select_1.wav");
         this.load.audio("wind", "./assets/audio/sound_fx/wind.wav");
+        this.load.audio("pageTurn1", "./assets/audio/sound_fx/page turn 1_1.wav");
+        this.load.audio("pageTurn2", "./assets/audio/sound_fx/page turn 2_1.wav");
+
 
         this.load.script("webfont", "https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js");
     }
 
     initProgressBar() {
         console.log("PreloaderScene.initProgressBar()");
+        this.progressBarX = this.cameras.main.width / 2 - 150;
+        this.progressBarY = this.cameras.main.height / 2 - 25;
         this.progressBar = this.add.graphics();
         this.progressBox = this.add.graphics();
         this.progressBox.fillStyle(0x222222, 0.8);
-        this.progressBox.fillRect(240, 270, 320, 50);
+        this.progressBox.fillRect(this.progressBarX, this.progressBarY, 320, 50);
     }
 
     displayLoadingText() {
