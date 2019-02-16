@@ -70,7 +70,6 @@ export default class GameHudScene extends Phaser.Scene {
                 if(this.playerWon) {
                     this.getting_near_the_endSoundFX.stop();
                 }
-
                 //Move mini me on mini map
                 if(this.gameScene.cameras.main) {
                     var miniMeX = 100 + (this.gameScene.cameras.main.scrollX / 13);

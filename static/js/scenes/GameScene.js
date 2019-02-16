@@ -286,7 +286,6 @@ export default class GameScene extends Phaser.Scene {
         //TODO: re-enable when tweaking the particles
         this.timedEvent = this.time.addEvent({ delay: Phaser.Math.Between(300,2000), callback: this.onEvent, callbackScope: this});
 
-
         this.front_00 = this.add.tileSprite(200,705,800,143,'foreground_brown');
         this.front_00.setDisplayOrigin(0);
         this.front_00.scrollFactorX = .8;
@@ -297,7 +296,7 @@ export default class GameScene extends Phaser.Scene {
         this.front_01.setDisplayOrigin(0);
         this.front_01.scrollFactorX = .8;
         this.front_01.setDepth(50);
-        */
+        
 
         this.levelSegment_00 = this.add.tileSprite(10,600,950,300,'mid_reg');
         this.levelSegment_00.setDisplayOrigin(0);
@@ -319,7 +318,6 @@ export default class GameScene extends Phaser.Scene {
 
     update(time, delta) {
         this.back.tilePositionX -= 100;
-
         if(this.player.visible) {
             this.playerSprite.setX(this.player.x);
             this.playerSprite.setY(this.player.y);
@@ -348,7 +346,7 @@ export default class GameScene extends Phaser.Scene {
                         this.germ_pushing_against_windSoundFX.play();
                     }
                 }
-
+              
                 if (this.player.y < 90) {
                     this.player.setVelocityY(10);
                 }

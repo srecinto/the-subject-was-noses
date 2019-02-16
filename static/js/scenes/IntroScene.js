@@ -101,6 +101,18 @@ export default class IntroScene extends Phaser.Scene {
         }
     }
 
+    update (time, delta) {
+        this.delta += delta;
+        if(this.delta > 175) {
+            this.delta = 0;
+            if(this.chatIndex < this.chatScreen.length) {
+                this.germChat[this.chatScreen[this.chatIndex]].play();
+            }
+
+            this.chatIndex++;
+        }
+    }
+
     clickHandler () {
         this.canSpeak = false;
         console.log("IntroScene.clickHandler()");

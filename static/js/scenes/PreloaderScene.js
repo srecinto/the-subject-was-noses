@@ -54,7 +54,6 @@ export default class PreloaderScene extends Phaser.Scene {
 
             }
         });
-
         this.scene.start("Title");
     }
 
@@ -103,6 +102,7 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.audio("wind", "./assets/audio/sound_fx/wind.wav");
         this.load.audio("pageTurn1", "./assets/audio/sound_fx/page turn 1_1.wav");
         this.load.audio("pageTurn2", "./assets/audio/sound_fx/page turn 2_1.wav");
+
 
         this.load.script("webfont", "https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js");
     }
